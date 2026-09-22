@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高雄市家/電訪紀錄生成器</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 5px; }
+        p.subtitle { text-align: center; color: #7f8c8d; font-size: 14px; margin-bottom: 25px; }
+        .section { margin-bottom: 20px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 6px; background: #fafafa; }
+        h3 { margin-top: 0; color: #16a085; font-size: 18px; border-bottom: 2px solid #e8e8e8; padding-bottom: 8px; }
+        .btn-group { margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .category-title { font-weight: bold; font-size: 14px; color: #555; width: 100%; margin-top: 5px; }
+        button { background: #3498db; color: #fff; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; transition: 0.2s; font-size: 13px; }
+        button:hover { background: #2980b9; transform: translateY(-1px); }
+        button.btn-copy { background: #2ecc71; margin-top: 10px; width: 100%; font-weight: bold; font-size: 15px; padding: 10px; }
+        button.btn-copy:hover { background: #27ae60; }
+        button.btn-clear { background: #e74c3c; width: 100%; margin-top: 10px; }
+        button.btn-clear:hover { background: #c0392b; }
+        textarea { width: 100%; height: 90px; padding: 12px; border: 1px solid #ccc; border-radius: 4px; resize: vertical; font-family: inherit; font-size: 15px; box-sizing: border-box; }
+        .label-desc { font-size: 13px; color: #e67e22; margin-bottom: 8px; display: block; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>高雄市家/電訪紀錄快速生成器</h1>
+    <p class="subtitle">點選下方標籤自動帶入詞庫。資料僅存於本機瀏覽器，安全無虞。</p>
+
+    <!-- 詞庫點選區 -->
+    <div class="section">
+        <h3>🗂️ 快速詞庫模組 (點選自動帶入對應欄位)</h3>
+        
+        <div class="category-title">▶ 1. 追蹤服務適應與介入情形</div>
+        <div class="btn-group">
+            <button onclick="addText('field1', '【B碼照顧服務】個案目前由B單位定期提供照顧，起居作息維持平穩。家屬表示居服員工作細心，案家肯定服務整體品質，後續仍有服務需求。\n')">+ B碼居服 (穩定滿意)</button>
+            <button onclick="addText('field1', '【B碼陪伴服務】居服員確實執行 BA20 陪伴服務，給予個案情緒支持並建立良好互動關係。\n')">+ BA20陪伴 (互動佳)</button>
+            <button onclick="addText('field1', '【D碼交通接送】案家目前已熟稔預約流程，本月皆能自行約車。家屬對整體滿意度極高，大幅提升就醫便利性。\n')">+ D碼交通 (順利約車)</button>
+            <button onclick="addText('field1', '【失智據點】個案持續規律參與失智據點各項活動，對於活動安排及服務內容表達高度肯定。\n')">+ 失智據點 (穩定參與)</button>
+        </div>
+
+        <div class="category-title">▶ 2. 目標達成情形</div>
+        <div class="btn-group">
+            <button onclick="addText('field2', '各項服務介入後適應良好，有效維持個案日常生活品質並減輕家屬照顧負荷，整體計畫目標穩定達成中。\n')">+ 目標達成 (整體穩定)</button>
+            <button onclick="addText('field2', '透過專業指導與服務介入，有效提升家庭自主照顧能力，目標逐步達成中。\n')">+ 目標達成 (能力提升)</button>
+        </div>
+
+        <div class="category-title">▶ 3. 適切性及需求異動</div>
+        <div class="btn-group">
+            <button onclick="addText('field3', '經評估目前服務組合能滿足個案需求，本月無調整計畫之需求，維持原計畫執行。\n')">+ 異動 (無須調整)</button>
+        </div>
+
+        <div class="category-title">▶ 4. 其他備註事項</div>
+        <div class="btn-group">
+            <button onclick="addText('field4', '訪視對象：家屬 / 電話訪視\n')">+ 訪視對象 (家屬/電訪)</button>
+            <button onclick="addText('field4', '個案本月健康狀況平穩，無特殊異常情形，持續追蹤。\n')">+ 狀況 (平穩無異常)</button>
+        </div>
+    </div>
+
+    <!-- 系統四大欄位對應區 -->
+    <div class="section">
+        <h3>1. 追蹤服務適應與介入情形</h3>
+        <span class="label-desc">※ 請依服務類型說明服務情形，如：照顧服務、交通接送、據點等</span>
+        <textarea id="field1" placeholder="點選上方詞庫或在此直接輸入..."></textarea>
+        <button class="btn-copy" onclick="copyText('field1')">📋 複製此欄位</button>
+    </div>
+
+    <div class="section">
+        <h3>2. 各項服務目標及整體計畫目標達成情形</h3>
+        <span class="label-desc">※ 說明各服務執行是否達到預期目標</span>
+        <textarea id="field2" placeholder="點選上方詞庫或在此直接輸入..."></textarea>
+        <button class="btn-copy" onclick="copyText('field2')">📋 複製此欄位</button>
+    </div>
+
+    <div class="section">
+        <h3>3. 整體計畫的適切性及需求異動</h3>
+        <span class="label-desc">※ 說明當月是否有提出計畫異動，或無調整需求</span>
+        <textarea id="field3" placeholder="點選上方詞庫或在此直接輸入..."></textarea>
+        <button class="btn-copy" onclick="copyText('field3')">📋 複製此欄位</button>
+    </div>
+
+    <div class="section">
+        <h3>4. 其他處理事項</h3>
+        <span class="label-desc">※ 紀錄訪視對象、關係、個案本月身體健康狀況或特殊情形</span>
+        <textarea id="field4" placeholder="點選上方詞庫或在此直接輸入..."></textarea>
+        <button class="btn-copy" onclick="copyText('field4')">📋 複製此欄位</button>
+    </div>
+    
+    <button class="btn-clear" onclick="clearAll()">🗑️ 清空所有欄位 (準備輸入下一位個案)</button>
+
+</div>
+
+<script>
+    // 將文字加入指定欄位
+    function addText(fieldId, text) {
+        const field = document.getElementById(fieldId);
+        // 如果欄位內原本有字，自動換行再加入新詞庫
+        if(field.value && !field.value.endsWith('\n')) {
+            field.value += '\n';
+        }
+        field.value += text;
+    }
+
+    // 複製指定欄位的文字
+    function copyText(fieldId) {
+        const field = document.getElementById(fieldId);
+        if (field.value.trim() === '') {
+            alert("⚠️ 欄位是空的，請先輸入內容再複製！");
+            return;
+        }
+        field.select();
+        field.setSelectionRange(0, 99999); // 確保手機裝置也能全選
+        navigator.clipboard.writeText(field.value).then(() => {
+            alert("✅ 複製成功！請直接貼上至申報系統。");
+        }).catch(err => {
+            alert("複製失敗，請嘗試手動選取複製。");
+        });
+    }
+
+    // 清空所有欄位
+    function clearAll() {
+        if(confirm("確定要清空所有欄位內容嗎？")) {
+            document.getElementById('field1').value = '';
+            document.getElementById('field2').value = '';
+            document.getElementById('field3').value = '';
+            document.getElementById('field4').value = '';
+        }
+    }
+</script>
+</body>
+</html>
