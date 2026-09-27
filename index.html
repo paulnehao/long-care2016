@@ -1,134 +1,2434 @@
+```html
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>高雄市家/電訪紀錄生成器</title>
+
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #2c3e50; margin-bottom: 5px; }
-        p.subtitle { text-align: center; color: #7f8c8d; font-size: 14px; margin-bottom: 25px; }
-        .section { margin-bottom: 20px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 6px; background: #fafafa; }
-        h3 { margin-top: 0; color: #16a085; font-size: 18px; border-bottom: 2px solid #e8e8e8; padding-bottom: 8px; }
-        .btn-group { margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
-        .category-title { font-weight: bold; font-size: 14px; color: #555; width: 100%; margin-top: 5px; }
-        button { background: #3498db; color: #fff; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; transition: 0.2s; font-size: 13px; }
-        button:hover { background: #2980b9; transform: translateY(-1px); }
-        button.btn-copy { background: #2ecc71; margin-top: 10px; width: 100%; font-weight: bold; font-size: 15px; padding: 10px; }
-        button.btn-copy:hover { background: #27ae60; }
-        button.btn-clear { background: #e74c3c; width: 100%; margin-top: 10px; }
-        button.btn-clear:hover { background: #c0392b; }
-        textarea { width: 100%; height: 90px; padding: 12px; border: 1px solid #ccc; border-radius: 4px; resize: vertical; font-family: inherit; font-size: 15px; box-sizing: border-box; }
-        .label-desc { font-size: 13px; color: #e67e22; margin-bottom: 8px; display: block; font-weight: bold; }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 25px;
+            background: #fcf9f2;
+
+            color: #756d63;
+
+            font-family:
+                "Noto Sans TC",
+                "Microsoft JhengHei",
+                Arial,
+                sans-serif;
+        }
+
+
+        /* =========================================
+           頁面標題
+        ========================================= */
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+
+            color: #625b53;
+
+            margin-bottom: 6px;
+        }
+
+        .page-description {
+            font-size: 15px;
+            color: #968c81;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* =========================================
+           每一個大區塊
+        ========================================= */
+
+        .record-section {
+
+            background: #fffdf8;
+
+            border: 1px solid #e5ded2;
+            border-radius: 22px;
+
+            padding: 20px;
+
+            margin-bottom: 18px;
+        }
+
+
+        /* =========================================
+           區塊標題
+        ========================================= */
+
+        .section-header {
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+
+            font-size: 20px;
+            font-weight: 700;
+
+            color: #6c6359;
+        }
+
+
+        /* =========================================
+           三欄
+        ========================================= */
+
+        .three-columns {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(180px, 1fr)
+                minmax(180px, 1fr)
+                minmax(300px, 2fr);
+
+            gap: 14px;
+        }
+
+
+        /* =========================================
+           三個欄位的外框
+        ========================================= */
+
+        .column {
+
+            background: #f9f3e9;
+
+            border-radius: 17px;
+
+            padding: 14px;
+
+            min-height: 220px;
+        }
+
+
+        .column-title {
+
+            font-size: 15px;
+            font-weight: 700;
+
+            color: #756c62;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* =========================================
+           左邊：勾選條件
+        ========================================= */
+
+        .condition-list {
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+        .condition {
+
+            display: flex;
+            align-items: center;
+
+            min-height: 42px;
+
+            padding: 8px 11px;
+
+            border-radius: 11px;
+
+            background: #f1e8db;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            transition: 0.15s;
+        }
+
+        .condition:hover {
+
+            background: #e9ddcd;
+        }
+
+
+        .condition input {
+
+            appearance: none;
+            -webkit-appearance: none;
+
+            width: 18px;
+            height: 18px;
+
+            margin: 0 9px 0 0;
+
+            flex-shrink: 0;
+
+            background: #fffefa;
+
+            border: 1.5px solid #aaa096;
+
+            border-radius: 4px;
+
+            position: relative;
+
+            cursor: pointer;
+        }
+
+
+        .condition input:checked {
+
+            background: #aa9b88;
+
+            border-color: #aa9b88;
+        }
+
+
+        .condition input:checked::after {
+
+            content: "✓";
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            transform:
+                translate(-50%, -52%);
+
+            color: white;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+
+        /* =========================================
+           中間：快速詞庫
+        ========================================= */
+
+        .phrase-list {
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+
+        .phrase-btn {
+
+            width: 100%;
+
+            border: none;
+
+            border-radius: 11px;
+
+            padding: 10px 12px;
+
+            background: #eee4d5;
+
+            color: #71685e;
+
+            font-size: 14px;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            transition: 0.15s;
+        }
+
+
+        .phrase-btn:hover {
+
+            background: #e3d6c5;
+
+            transform: translateX(2px);
+        }
+
+
+        .phrase-btn:active {
+
+            transform: scale(0.98);
+        }
+
+
+        /* =========================================
+           右邊：生成區
+        ========================================= */
+
+        .result-column {
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .result-text {
+
+            width: 100%;
+
+            flex: 1;
+
+            min-height: 150px;
+
+            resize: vertical;
+
+            border: 1px solid #ddd2c4;
+
+            border-radius: 13px;
+
+            padding: 12px;
+
+            background: #fffefa;
+
+            color: #655d55;
+
+            font-family:
+                "Noto Sans TC",
+                "Microsoft JhengHei",
+                Arial,
+                sans-serif;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            outline: none;
+        }
+
+
+        .result-text:focus {
+
+            border-color: #b8aa97;
+
+            box-shadow:
+                0 0 0 2px
+                rgba(184, 170, 151, 0.15);
+        }
+
+
+        /* =========================================
+           區塊按鈕
+        ========================================= */
+
+        .section-buttons {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 8px;
+
+            margin-top: 12px;
+        }
+
+
+        .section-btn {
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding: 8px 14px;
+
+            background: #eee5d8;
+
+            color: #685f56;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+
+        .section-btn:hover {
+
+            background: #e3d7c8;
+        }
+
+
+        .copy-btn {
+
+            background: #dfd2c1;
+        }
+
+
+        /* =========================================
+           最下方
+        ========================================= */
+
+        .bottom-area {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            margin-top: 20px;
+
+            padding-bottom: 40px;
+        }
+
+
+        .bottom-btn {
+
+            border: none;
+
+            border-radius: 13px;
+
+            padding: 12px 20px;
+
+            background: #eee5d8;
+
+            color: #625a52;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+
+        .bottom-btn:hover {
+
+            background: #e2d6c7;
+        }
+
+
+        /* =========================================
+           RWD
+        ========================================= */
+
+        @media (max-width: 1000px) {
+
+            .three-columns {
+
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+            .result-column {
+
+                grid-column: 1 / -1;
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .three-columns {
+
+                grid-template-columns: 1fr;
+            }
+
+            .result-column {
+
+                grid-column: auto;
+            }
+
+            .record-section {
+
+                padding: 14px;
+            }
+
+            .section-title {
+
+                font-size: 18px;
+            }
+        }
+
     </style>
+
 </head>
+
+
 <body>
 
-<div class="container">
-    <h1>高雄市家/電訪紀錄快速生成器</h1>
-    <p class="subtitle">點選下方標籤自動帶入詞庫。資料僅存於本機瀏覽器，安全無虞。</p>
 
-    <!-- 詞庫點選區 -->
-    <div class="section">
-        <h3>🗂️ 快速詞庫模組 (點選自動帶入對應欄位)</h3>
-        
-        <div class="category-title">▶ 1. 追蹤服務適應與介入情形</div>
-        <div class="btn-group">
-            <button onclick="addText('field1', '【B碼照顧服務】個案目前由B單位定期提供照顧，起居作息維持平穩。家屬表示居服員工作細心，案家肯定服務整體品質，後續仍有服務需求。\n')">+ B碼居服 (穩定滿意)</button>
-            <button onclick="addText('field1', '【B碼陪伴服務】居服員確實執行 BA20 陪伴服務，給予個案情緒支持並建立良好互動關係。\n')">+ BA20陪伴 (互動佳)</button>
-            <button onclick="addText('field1', '【D碼交通接送】案家目前已熟稔預約流程，本月皆能自行約車。家屬對整體滿意度極高，大幅提升就醫便利性。\n')">+ D碼交通 (順利約車)</button>
-            <button onclick="addText('field1', '【失智據點】個案持續規律參與失智據點各項活動，對於活動安排及服務內容表達高度肯定。\n')">+ 失智據點 (穩定參與)</button>
-            <button onclick="addText('field1', '【據點】個案持續規律參與失智據點各項活動，肯定。\n')">+ 據點 (穩定參與)</button>
+    <!-- =========================================
+         頁面標題
+    ========================================== -->
+
+    <div class="page-title">
+        高雄市家/電訪紀錄生成器
+    </div>
+
+    <div class="page-description">
+        勾選左側條件或點選中間快速詞庫，即可產生電訪紀錄。
+    </div>
+
+
+
+    <!-- =====================================================
+         1. 個案體況追蹤
+    ====================================================== -->
+
+    <section class="record-section">
+
+        <div class="section-header">
+
+            <div class="section-title">
+                個案體況追蹤
+            </div>
+
         </div>
 
-        <div class="category-title">▶ 2. 目標達成情形</div>
-        <div class="btn-group">
-            <button onclick="addText('field2', '各項服務介入後適應良好，有效維持個案日常生活品質並減輕家屬照顧負荷，整體計畫目標穩定達成中。\n')">+ 目標達成 (整體穩定)</button>
-            <button onclick="addText('field2', '透過專業指導與服務介入，有效提升家庭自主照顧能力，目標逐步達成中。\n')">+ 目標達成 (能力提升)</button>
+
+        <div class="three-columns">
+
+
+            <!-- 左：勾選條件 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    ☑ 勾選條件
+                </div>
+
+                <div class="condition-list">
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="physical"
+                            data-text="個案目前體況穩定。"
+                        >
+
+                        體況穩定
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="physical"
+                            data-text="個案近期體況有退化情形。"
+                        >
+
+                        體況退化
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="physical"
+                            data-text="個案近期體況較前改善。"
+                        >
+
+                        體況改善
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="physical"
+                            data-text="個案近期曾有住院情形。"
+                        >
+
+                        近期住院
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="physical"
+                            data-text="個案近期曾至急診就醫。"
+                        >
+
+                        近期急診
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="physical"
+                            data-text="個案近期有跌倒情形。"
+                        >
+
+                        近期跌倒
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="physical"
+                            data-text="個案近期疼痛情形增加。"
+                        >
+
+                        疼痛增加
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="physical"
+                            data-text="個案近期食慾下降。"
+                        >
+
+                        食慾下降
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="physical"
+                            data-text="個案近期睡眠品質不佳。"
+                        >
+
+                        睡眠不佳
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="physical"
+                            data-text="個案近期有體重減輕情形。"
+                        >
+
+                        體重減輕
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 中：快速詞庫 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    📚 快速詞庫
+                </div>
+
+                <div class="phrase-list">
+
+                    <button
+                        class="phrase-btn"
+                        data-target="physical"
+                        data-text="目前個案整體體況穩定，無明顯異常。"
+                    >
+                        ＋ 整體狀況穩定
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="physical"
+                        data-text="近期無住院及急診就醫情形。"
+                    >
+                        ＋ 無住院／急診
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="physical"
+                        data-text="近期無跌倒情形。"
+                    >
+                        ＋ 無跌倒
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="physical"
+                        data-text="目前飲食狀況尚可，食慾正常。"
+                    >
+                        ＋ 食慾正常
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="physical"
+                        data-text="目前睡眠情況尚可，夜間休息情形正常。"
+                    >
+                        ＋ 睡眠正常
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 右：生成結果 -->
+
+            <div class="column result-column">
+
+                <div class="column-title">
+                    📝 電訪紀錄
+                </div>
+
+                <textarea
+                    id="result-physical"
+                    class="result-text"
+                    placeholder="勾選左側條件或點選快速詞庫後，內容會出現在這裡..."
+                ></textarea>
+
+            </div>
+
         </div>
 
-        <div class="category-title">▶ 3. 適切性及需求異動</div>
-        <div class="btn-group">
-            <button onclick="addText('field3', '經評估目前服務組合能滿足個案需求，本月無調整計畫之需求，維持原計畫執行。\n')">+ 異動 (無須調整)</button>
+
+        <!-- 區塊功能 -->
+
+        <div class="section-buttons">
+
+            <button
+                class="section-btn copy-btn"
+                onclick="copySection('physical')"
+            >
+                📋 複製本區塊
+            </button>
+
+            <button
+                class="section-btn"
+                onclick="clearSection('physical')"
+            >
+                清空
+            </button>
+
         </div>
 
-        <div class="category-title">▶ 4. 其他備註事項</div>
-        <div class="btn-group">
-            <button onclick="addText('field4', '訪視對象：家屬 / 電話訪視\n')">+ 訪視對象 (家屬/電訪)</button>
-            <button onclick="addText('field4', '個案本月健康狀況平穩，無特殊異常情形，持續追蹤。\n')">+ 狀況 (平穩無異常)</button>
+    </section>
+
+
+
+    <!-- =====================================================
+         2. 認知情緒
+    ====================================================== -->
+
+    <section class="record-section">
+
+        <div class="section-header">
+
+            <div class="section-title">
+                認知情緒
+            </div>
+
         </div>
+
+
+        <div class="three-columns">
+
+
+            <!-- 左 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    ☑ 勾選條件
+                </div>
+
+                <div class="condition-list">
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="mental"
+                            data-text="個案目前認知及情緒狀況穩定。"
+                        >
+
+                        認知情緒穩定
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="mental"
+                            data-text="個案近期有記憶力下降情形。"
+                        >
+
+                        記憶力下降
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="mental"
+                            data-text="個案近期情緒較為低落。"
+                        >
+
+                        情緒低落
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="mental"
+                            data-text="個案近期較有焦躁不安情形。"
+                        >
+
+                        焦躁不安
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="mental"
+                            data-text="個案目前有拒絕服務情形。"
+                        >
+
+                        拒絕服務
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="mental"
+                            data-text="個案目前有拒絕照顧情形。"
+                        >
+
+                        拒絕照顧
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 中 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    📚 快速詞庫
+                </div>
+
+                <div class="phrase-list">
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="mental"
+                        data-text="目前個案情緒穩定，與家屬及服務人員互動正常。"
+                    >
+                        ＋ 情緒穩定
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="mental"
+                        data-text="目前未觀察到明顯異常情緒反應。"
+                    >
+                        ＋ 無明顯異常
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="mental"
+                        data-text="家屬表示近期記憶狀況與過往相比無明顯變化。"
+                    >
+                        ＋ 記憶狀況穩定
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="mental"
+                        data-text="目前個案能配合相關服務安排。"
+                    >
+                        ＋ 配合服務
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 右 -->
+
+            <div class="column result-column">
+
+                <div class="column-title">
+                    📝 電訪紀錄
+                </div>
+
+                <textarea
+                    id="result-mental"
+                    class="result-text"
+                    placeholder="此區塊的電訪紀錄會顯示於此..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="section-buttons">
+
+            <button
+                class="section-btn copy-btn"
+                onclick="copySection('mental')"
+            >
+                📋 複製本區塊
+            </button>
+
+            <button
+                class="section-btn"
+                onclick="clearSection('mental')"
+            >
+                清空
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         3. 服務使用狀況
+    ====================================================== -->
+
+    <section class="record-section">
+
+        <div class="section-header">
+
+            <div class="section-title">
+                服務使用狀況
+            </div>
+
+        </div>
+
+
+        <div class="three-columns">
+
+
+            <!-- 左 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    ☑ 勾選條件
+                </div>
+
+                <div class="condition-list">
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="service"
+                            data-text="目前服務正常使用。"
+                        >
+
+                        服務正常使用
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="service"
+                            data-text="個案及家屬對目前服務感到滿意。"
+                        >
+
+                        對服務滿意
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="service"
+                            data-text="個案及家屬目前有增加服務之需求。"
+                        >
+
+                        希望增加服務
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="service"
+                            data-text="個案及家屬目前希望減少服務。"
+                        >
+
+                        希望減少服務
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="service"
+                            data-text="個案及家屬目前有更換服務人員之需求。"
+                        >
+
+                        希望更換人員
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="service"
+                            data-text="目前服務暫停中。"
+                        >
+
+                        服務暫停
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="service"
+                            data-text="目前服務已結束。"
+                        >
+
+                        服務結束
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 中 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    📚 快速詞庫
+                </div>
+
+                <div class="phrase-list">
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="service"
+                        data-text="目前居家服務執行情形穩定，個案能正常接受服務。"
+                    >
+                        ＋ 居服穩定
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="service"
+                        data-text="目前服務內容符合個案需求，暫無調整需要。"
+                    >
+                        ＋ 符合需求
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="service"
+                        data-text="家屬表示目前服務安排尚可，對現行服務感到滿意。"
+                    >
+                        ＋ 家屬滿意
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="service"
+                        data-text="目前無新增服務需求。"
+                    >
+                        ＋ 無新增需求
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 右 -->
+
+            <div class="column result-column">
+
+                <div class="column-title">
+                    📝 電訪紀錄
+                </div>
+
+                <textarea
+                    id="result-service"
+                    class="result-text"
+                    placeholder="此區塊的電訪紀錄會顯示於此..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="section-buttons">
+
+            <button
+                class="section-btn copy-btn"
+                onclick="copySection('service')"
+            >
+                📋 複製本區塊
+            </button>
+
+            <button
+                class="section-btn"
+                onclick="clearSection('service')"
+            >
+                清空
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         4. 專業服務追蹤
+    ====================================================== -->
+
+    <section class="record-section">
+
+        <div class="section-header">
+
+            <div class="section-title">
+                專業服務追蹤
+            </div>
+
+        </div>
+
+
+        <div class="three-columns">
+
+
+            <!-- 左 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    ☑ 勾選條件
+                </div>
+
+                <div class="condition-list">
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="professional"
+                            data-text="目前復能服務持續進行。"
+                        >
+
+                        復能持續進行
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="professional"
+                            data-text="目前服務目標已達成。"
+                        >
+
+                        已達目標
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="professional"
+                            data-text="目前服務成效有限，後續持續觀察。"
+                        >
+
+                        成效有限
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="professional"
+                            data-text="目前相關情形待後續持續追蹤。"
+                        >
+
+                        待追蹤
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 中 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    📚 快速詞庫
+                </div>
+
+                <div class="phrase-list">
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="professional"
+                        data-text="目前復能服務持續執行中，個案能配合相關訓練。"
+                    >
+                        ＋ 復能進行
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="professional"
+                        data-text="目前服務目標已達成，後續將依實際需求進行追蹤。"
+                    >
+                        ＋ 目標達成
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="professional"
+                        data-text="目前服務成效尚可，持續觀察後續情形。"
+                    >
+                        ＋ 持續觀察
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 右 -->
+
+            <div class="column result-column">
+
+                <div class="column-title">
+                    📝 電訪紀錄
+                </div>
+
+                <textarea
+                    id="result-professional"
+                    class="result-text"
+                    placeholder="此區塊的電訪紀錄會顯示於此..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="section-buttons">
+
+            <button
+                class="section-btn copy-btn"
+                onclick="copySection('professional')"
+            >
+                📋 複製本區塊
+            </button>
+
+            <button
+                class="section-btn"
+                onclick="clearSection('professional')"
+            >
+                清空
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         5. 照顧者狀況
+    ====================================================== -->
+
+    <section class="record-section">
+
+        <div class="section-header">
+
+            <div class="section-title">
+                照顧者狀況
+            </div>
+
+        </div>
+
+
+        <div class="three-columns">
+
+
+            <!-- 左 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    ☑ 勾選條件
+                </div>
+
+                <div class="condition-list">
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="caregiver"
+                            data-text="目前家庭支持情形良好。"
+                        >
+
+                        家庭支持良好
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="caregiver"
+                            data-text="目前家庭支持較為不足。"
+                        >
+
+                        家庭支持不足
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 中 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    📚 快速詞庫
+                </div>
+
+                <div class="phrase-list">
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="caregiver"
+                        data-text="主要照顧者目前照顧情形尚可，家庭支持系統良好。"
+                    >
+                        ＋ 家庭支持良好
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="caregiver"
+                        data-text="家屬目前能提供必要照顧，暫無明顯照顧壓力。"
+                    >
+                        ＋ 照顧尚可
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="caregiver"
+                        data-text="目前主要照顧者照顧負荷較高，後續持續關懷。"
+                    >
+                        ＋ 照顧負荷
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 右 -->
+
+            <div class="column result-column">
+
+                <div class="column-title">
+                    📝 電訪紀錄
+                </div>
+
+                <textarea
+                    id="result-caregiver"
+                    class="result-text"
+                    placeholder="此區塊的電訪紀錄會顯示於此..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="section-buttons">
+
+            <button
+                class="section-btn copy-btn"
+                onclick="copySection('caregiver')"
+            >
+                📋 複製本區塊
+            </button>
+
+            <button
+                class="section-btn"
+                onclick="clearSection('caregiver')"
+            >
+                清空
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         6. 安全風險
+    ====================================================== -->
+
+    <section class="record-section">
+
+        <div class="section-header">
+
+            <div class="section-title">
+                安全風險
+            </div>
+
+        </div>
+
+
+        <div class="three-columns">
+
+
+            <!-- 左 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    ☑ 勾選條件
+                </div>
+
+                <div class="condition-list">
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="safety"
+                            data-text="目前無特殊安全風險。"
+                        >
+
+                        無特殊風險
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="safety"
+                            data-text="目前有跌倒風險，後續持續提醒注意居家安全。"
+                        >
+
+                        跌倒風險
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="safety"
+                            data-text="目前有走失風險，已提醒家屬留意個案安全。"
+                        >
+
+                        走失風險
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="safety"
+                            data-text="目前有用藥相關問題，後續持續追蹤。"
+                        >
+
+                        用藥問題
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="safety"
+                            data-text="目前為獨居情形，需持續關注居家安全。"
+                        >
+
+                        獨居風險
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="safety"
+                            data-text="目前居家環境有相關安全風險，已提醒家屬注意。"
+                        >
+
+                        居家環境風險
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 中 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    📚 快速詞庫
+                </div>
+
+                <div class="phrase-list">
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="safety"
+                        data-text="目前居家環境尚屬安全，暫無特殊風險。"
+                    >
+                        ＋ 居家安全
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="safety"
+                        data-text="已提醒個案及家屬注意居家環境安全。"
+                    >
+                        ＋ 安全提醒
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="safety"
+                        data-text="目前無明顯跌倒及走失等安全風險。"
+                    >
+                        ＋ 無明顯風險
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 右 -->
+
+            <div class="column result-column">
+
+                <div class="column-title">
+                    📝 電訪紀錄
+                </div>
+
+                <textarea
+                    id="result-safety"
+                    class="result-text"
+                    placeholder="此區塊的電訪紀錄會顯示於此..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="section-buttons">
+
+            <button
+                class="section-btn copy-btn"
+                onclick="copySection('safety')"
+            >
+                📋 複製本區塊
+            </button>
+
+            <button
+                class="section-btn"
+                onclick="clearSection('safety')"
+            >
+                清空
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         7. 資源需求
+    ====================================================== -->
+
+    <section class="record-section">
+
+        <div class="section-header">
+
+            <div class="section-title">
+                資源需求
+            </div>
+
+        </div>
+
+
+        <div class="three-columns">
+
+
+            <!-- 左 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    ☑ 勾選條件
+                </div>
+
+                <div class="condition-list">
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="resources"
+                            data-text="目前無新增資源需求。"
+                        >
+
+                        無新增需求
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="resources"
+                            data-text="目前有輔具相關需求。"
+                        >
+
+                        輔具需求
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="resources"
+                            data-text="目前有無障礙環境相關需求。"
+                        >
+
+                        無障礙需求
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="resources"
+                            data-text="目前有身心障礙相關資源需求。"
+                        >
+
+                        身障需求
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="resources"
+                            data-text="目前有社福補助相關需求。"
+                        >
+
+                        社福補助需求
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="resources"
+                            data-text="目前有經濟相關需求。"
+                        >
+
+                        經濟需求
+
+                    </label>
+
+
+                    <label class="condition">
+
+                        <input
+                            type="checkbox"
+                            data-section="resources"
+                            data-text="目前有醫療相關資源需求。"
+                        >
+
+                        醫療需求
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 中 -->
+
+            <div class="column">
+
+                <div class="column-title">
+                    📚 快速詞庫
+                </div>
+
+                <div class="phrase-list">
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="resources"
+                        data-text="目前無新增資源需求，後續依個案實際需求持續追蹤。"
+                    >
+                        ＋ 無新增需求
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="resources"
+                        data-text="已向家屬說明相關資源，後續將視需求協助連結。"
+                    >
+                        ＋ 資源說明
+                    </button>
+
+
+                    <button
+                        class="phrase-btn"
+                        data-target="resources"
+                        data-text="後續將持續關注個案相關資源需求。"
+                    >
+                        ＋ 持續追蹤
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 右 -->
+
+            <div class="column result-column">
+
+                <div class="column-title">
+                    📝 電訪紀錄
+                </div>
+
+                <textarea
+                    id="result-resources"
+                    class="result-text"
+                    placeholder="此區塊的電訪紀錄會顯示於此..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="section-buttons">
+
+            <button
+                class="section-btn copy-btn"
+                onclick="copySection('resources')"
+            >
+                📋 複製本區塊
+            </button>
+
+            <button
+                class="section-btn"
+                onclick="clearSection('resources')"
+            >
+                清空
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         全部功能
+    ====================================================== -->
+
+    <div class="bottom-area">
+
+        <button
+            class="bottom-btn"
+            onclick="copyAll()"
+        >
+            📋 複製全部電訪紀錄
+        </button>
+
+
+        <button
+            class="bottom-btn"
+            onclick="clearAll()"
+        >
+            🗑️ 清空全部
+        </button>
+
     </div>
 
-    <!-- 系統四大欄位對應區 -->
-    <div class="section">
-        <h3>1. 追蹤服務適應與介入情形</h3>
-        <span class="label-desc">※ 請依服務類型說明服務情形，如：照顧服務、交通接送、據點等</span>
-        <textarea id="field1" placeholder="點選上方詞庫或在此直接輸入..."></textarea>
-        <button class="btn-copy" onclick="copyText('field1')">📋 複製此欄位</button>
-    </div>
 
-    <div class="section">
-        <h3>2. 各項服務目標及整體計畫目標達成情形</h3>
-        <span class="label-desc">※ 說明各服務執行是否達到預期目標</span>
-        <textarea id="field2" placeholder="點選上方詞庫或在此直接輸入..."></textarea>
-        <button class="btn-copy" onclick="copyText('field2')">📋 複製此欄位</button>
-    </div>
 
-    <div class="section">
-        <h3>3. 整體計畫的適切性及需求異動</h3>
-        <span class="label-desc">※ 說明當月是否有提出計畫異動，或無調整需求</span>
-        <textarea id="field3" placeholder="點選上方詞庫或在此直接輸入..."></textarea>
-        <button class="btn-copy" onclick="copyText('field3')">📋 複製此欄位</button>
-    </div>
+    <script>
 
-    <div class="section">
-        <h3>4. 其他處理事項</h3>
-        <span class="label-desc">※ 紀錄訪視對象、關係、個案本月身體健康狀況或特殊情形</span>
-        <textarea id="field4" placeholder="點選上方詞庫或在此直接輸入..."></textarea>
-        <button class="btn-copy" onclick="copyText('field4')">📋 複製此欄位</button>
-    </div>
-    
-    <button class="btn-clear" onclick="clearAll()">🗑️ 清空所有欄位 (準備輸入下一位個案)</button>
 
-</div>
+        /* =========================================
+           所有區塊
+        ========================================= */
 
-<script>
-    // 將文字加入指定欄位
-    function addText(fieldId, text) {
-        const field = document.getElementById(fieldId);
-        // 如果欄位內原本有字，自動換行再加入新詞庫
-        if(field.value && !field.value.endsWith('\n')) {
-            field.value += '\n';
+        const sections = [
+
+            "physical",
+            "mental",
+            "service",
+            "professional",
+            "caregiver",
+            "safety",
+            "resources"
+
+        ];
+
+
+
+        /* =========================================
+           左側勾選條件
+           
+           勾選後：
+           → 自動重新整理右側文字
+        ========================================= */
+
+        document
+            .querySelectorAll(".condition input")
+            .forEach(function (checkbox) {
+
+                checkbox.addEventListener(
+                    "change",
+                    function () {
+
+                        generateSection(
+                            checkbox.dataset.section
+                        );
+
+                        saveData();
+
+                    }
+                );
+
+            });
+
+
+
+        /* =========================================
+           產生單一區塊文字
+        ========================================= */
+
+        function generateSection(sectionName) {
+
+            const checkboxes =
+                document.querySelectorAll(
+                    `.condition input[data-section="${sectionName}"]`
+                );
+
+
+            const texts = [];
+
+
+            checkboxes.forEach(function (checkbox) {
+
+                if (checkbox.checked) {
+
+                    texts.push(
+                        checkbox.dataset.text
+                    );
+
+                }
+
+            });
+
+
+            const textarea =
+                document.getElementById(
+                    "result-" + sectionName
+                );
+
+
+            /*
+             * 注意：
+             *
+             * 如果右邊已經有快速詞庫內容，
+             * 不直接覆蓋。
+             *
+             * 這裡只處理由 checkbox
+             * 自動生成的部分。
+             */
+
+            const manualText =
+                textarea.dataset.manualText || "";
+
+
+            const autoText =
+                texts.join("\n");
+
+
+            if (manualText && autoText) {
+
+                textarea.value =
+                    manualText +
+                    "\n" +
+                    autoText;
+
+            }
+            else {
+
+                textarea.value =
+                    manualText ||
+                    autoText;
+
+            }
+
         }
-        field.value += text;
-    }
 
-    // 複製指定欄位的文字
-    function copyText(fieldId) {
-        const field = document.getElementById(fieldId);
-        if (field.value.trim() === '') {
-            alert("⚠️ 欄位是空的，請先輸入內容再複製！");
-            return;
-        }
-        field.select();
-        field.setSelectionRange(0, 99999); // 確保手機裝置也能全選
-        navigator.clipboard.writeText(field.value).then(() => {
-            alert("✅ 複製成功！請直接貼上至申報系統。");
-        }).catch(err => {
-            alert("複製失敗，請嘗試手動選取複製。");
-        });
-    }
 
-    // 清空所有欄位
-    function clearAll() {
-        if(confirm("確定要清空所有欄位內容嗎？")) {
-            document.getElementById('field1').value = '';
-            document.getElementById('field2').value = '';
-            document.getElementById('field3').value = '';
-            document.getElementById('field4').value = '';
+
+        /* =========================================
+           中間快速詞庫
+        ========================================= */
+
+        document
+            .querySelectorAll(".phrase-btn")
+            .forEach(function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        const section =
+                            button.dataset.target;
+
+                        const text =
+                            button.dataset.text;
+
+                        const textarea =
+                            document.getElementById(
+                                "result-" + section
+                            );
+
+
+                        /*
+                         * 把快速詞庫文字加入
+                         * manualText
+                         */
+
+                        let manualText =
+                            textarea.dataset.manualText || "";
+
+
+                        if (manualText.trim() !== "") {
+
+                            manualText += "\n";
+
+                        }
+
+
+                        manualText += text;
+
+
+                        textarea.dataset.manualText =
+                            manualText;
+
+
+                        generateSection(section);
+
+                        saveData();
+
+                    }
+                );
+
+            });
+
+
+
+        /* =========================================
+           直接修改右側文字時
+        ========================================= */
+
+        document
+            .querySelectorAll(".result-text")
+            .forEach(function (textarea) {
+
+                textarea.addEventListener(
+                    "input",
+                    function () {
+
+                        /*
+                         * 使用者手動修改後，
+                         * 將目前內容視為自訂內容。
+                         */
+
+                        textarea.dataset.manualText =
+                            textarea.value;
+
+                        saveData();
+
+                    }
+                );
+
+            });
+
+
+
+        /* =========================================
+           複製單一區塊
+        ========================================= */
+
+        function copySection(sectionName) {
+
+            const textarea =
+                document.getElementById(
+                    "result-" + sectionName
+                );
+
+
+            const title =
+                document
+                    .querySelector(
+                        `[data-section-title="${sectionName}"]`
+                    );
+
+
+            const text =
+                textarea.value.trim();
+
+
+            if (!text) {
+
+                alert("這個區塊目前沒有內容。");
+
+                return;
+            }
+
+
+            navigator.clipboard
+                .writeText(text)
+                .then(function () {
+
+                    alert("已複製本區塊！");
+
+                });
+
         }
-    }
-</script>
+
+
+
+        /* =========================================
+           清空單一區塊
+        ========================================= */
+
+        function clearSection(sectionName) {
+
+            const textarea =
+                document.getElementById(
+                    "result-" + sectionName
+                );
+
+
+            textarea.value = "";
+
+            textarea.dataset.manualText = "";
+
+
+            /*
+             * 同時取消左側 checkbox
+             */
+
+            document
+                .querySelectorAll(
+                    `.condition input[data-section="${sectionName}"]`
+                )
+                .forEach(function (checkbox) {
+
+                    checkbox.checked = false;
+
+                });
+
+
+            saveData();
+
+        }
+
+
+
+        /* =========================================
+           複製全部
+        ========================================= */
+
+        function copyAll() {
+
+            const titleMap = {
+
+                physical: "一、個案體況追蹤",
+
+                mental: "二、認知情緒",
+
+                service: "三、服務使用狀況",
+
+                professional: "四、專業服務追蹤",
+
+                caregiver: "五、照顧者狀況",
+
+                safety: "六、安全風險",
+
+                resources: "七、資源需求"
+
+            };
+
+
+            let allText = "";
+
+
+            sections.forEach(function (sectionName) {
+
+                const text =
+                    document
+                        .getElementById(
+                            "result-" + sectionName
+                        )
+                        .value
+                        .trim();
+
+
+                if (text) {
+
+                    allText +=
+                        titleMap[sectionName] +
+                        "\n" +
+                        text +
+                        "\n\n";
+
+                }
+
+            });
+
+
+            if (!allText.trim()) {
+
+                alert("目前沒有任何電訪紀錄。");
+
+                return;
+            }
+
+
+            navigator.clipboard
+                .writeText(allText.trim())
+                .then(function () {
+
+                    alert("已複製全部電訪紀錄！");
+
+                });
+
+        }
+
+
+
+        /* =========================================
+           清空全部
+        ========================================= */
+
+        function clearAll() {
+
+            if (
+                !confirm(
+                    "確定要清空所有電訪紀錄嗎？"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            sections.forEach(function (sectionName) {
+
+                clearSection(sectionName);
+
+            });
+
+
+            localStorage.removeItem(
+                "kaohsiungPhoneRecord"
+            );
+
+        }
+
+
+
+        /* =========================================
+           儲存
+        ========================================= */
+
+        function saveData() {
+
+            const data = {};
+
+
+            sections.forEach(function (sectionName) {
+
+                const textarea =
+                    document.getElementById(
+                        "result-" + sectionName
+                    );
+
+
+                data[sectionName] = {
+
+                    text: textarea.value,
+
+                    manualText:
+                        textarea.dataset.manualText || ""
+
+                };
+
+            });
+
+
+            localStorage.setItem(
+
+                "kaohsiungPhoneRecord",
+
+                JSON.stringify(data)
+
+            );
+
+        }
+
+
+
+        /* =========================================
+           載入
+        ========================================= */
+
+        function loadData() {
+
+            const saved =
+                localStorage.getItem(
+                    "kaohsiungPhoneRecord"
+                );
+
+
+            if (!saved) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const data =
+                    JSON.parse(saved);
+
+
+                sections.forEach(
+                    function (sectionName) {
+
+                        const textarea =
+                            document.getElementById(
+                                "result-" + sectionName
+                            );
+
+
+                        if (
+                            data[sectionName]
+                        ) {
+
+                            textarea.value =
+                                data[sectionName].text || "";
+
+
+                            textarea.dataset.manualText =
+                                data[sectionName].manualText || "";
+
+                        }
+
+                    }
+                );
+
+            }
+            catch (error) {
+
+                console.log(
+                    "讀取儲存資料失敗",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+        /* =========================================
+           啟動
+        ========================================= */
+
+        loadData();
+
+    </script>
+
 </body>
+
 </html>
+```
+
