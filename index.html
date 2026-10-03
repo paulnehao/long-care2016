@@ -150,17 +150,20 @@
         </div>
     </div>
 
-    <!-- 欄位 3 -->
+<!-- 欄位 3 -->
     <div class="section-card" id="sec3">
         <div class="section-title">3. 整體計畫的適切性及需求異動</div>
-        <span class="section-desc">※ 勾選當月是否有提出計畫異動、無調整需求或複評說明：</span>
+        <span class="section-desc">※ 勾選當月是否有提出計畫異動、無調整需求或複評/新案說明：</span>
 
         <div class="Sub-group">
             <div class="checkbox-grid">
                 <label class="chk-card"><input type="checkbox" class="chk-f3" value="現階段照顧需求穩定，本月服務計畫內容與額度維持不變，暫無異動需求。" onchange="updateField(3)"> 無異動：需求穩定、計畫與額度不變</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f3" value="目前服務頻率與項目皆切合所需，【{role}】本月表達暫無異動或調整服務計畫之需求。" onchange="updateField(3)"> 無異動：切合所需、案家無調整需求</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f3" value="已向【{role}】詳細說明目前核定之長照服務項目、額度及部分負擔比例，並交付「高雄市長期照顧服務使用說明單」，保障案方知悉相關長照權益與申訴管道。" onchange="updateField(3)"> AA01/複評：已說明核定內容並交付使用說明單</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f3" value="因應個案近期照顧需求改變，本月提出計畫異動申請，已協助調整服務項目並照會相關特約單位。" onchange="updateField(3)"> 有異動：需求改變、已調整計畫並照會單位</label>
+                
+                <!-- 👇 以下為本次新增的 2 個選項 👇 -->
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="已向家屬【個案】解釋目前長照服務內容並交付高雄市長期照顧服務使用說明單。" onchange="updateField(3)"> 複評/AA01</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="已向家屬【個案】詳細說明目前核定之長照服務項目、額度及部分負擔比例，並正式交付「高雄市長期照顧服務使用說明單」，以保障案方已知悉相關長照權益與申訴管道。" onchange="updateField(3)"> 新案/出備案</label>
             </div>
         </div>
 
@@ -173,6 +176,7 @@
         </div>
     </div>
 
+    
     <!-- 欄位 4 -->
     <div class="section-card" id="sec4">
         <div class="section-title">4. 其他處理事項 (備註事項)</div>
