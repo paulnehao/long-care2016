@@ -41,12 +41,288 @@ HTML
     </div>
 
     <!-- 這裡預留給未來的照顧計畫表單 -->
-    <div style="text-align: center; padding: 50px; color: #64748b;">
-        <h2>照顧計畫的欄位與詞庫準備中...</h2>
-        <p>您可以將需要的欄位（例如：問題確立、照顧目標、介入措施等）貼給我，我再來幫您把這頁的表單寫出來！</p>
+   <!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>照顧計畫生成器 - 高雄市 A單位</title>
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-light: #f0fdfa;
+            --border: #cbd5e1;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --red: #dc2626;
+        }
+        body { font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 960px; margin: auto; background: #fff; padding: 28px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+        header { border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
+        h1 { color: var(--primary); margin: 0 0 6px 0; font-size: 24px; }
+        .subtitle { color: #64748b; font-size: 14px; margin: 0; }
+        
+        /* 導覽列特效 */
+        .nav-bar { background: #0f766e; padding: 10px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; }
+        .nav-bar a { color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; transition: 0.2s; }
+        .nav-bar a:hover { background: rgba(255,255,255,0.2); }
+        .nav-bar a.active { background: rgba(255,255,255,0.3); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.3); }
+        
+        /* 各大欄位區塊 */
+        .section-card { border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 25px; background: #fff; }
+        .section-title { font-size: 18px; font-weight: bold; color: var(--red); margin: 0 0 6px 0; display: flex; align-items: center; justify-content: space-between; }
+        .section-desc { font-size: 13px; color: #1e40af; margin-bottom: 15px; font-weight: bold; display: block; line-height: 1.4; }
+
+        /* 問卷 Checkbox 群組 */
+        .Sub-group { margin-bottom: 14px; background: var(--primary-light); padding: 12px 15px; border-radius: 8px; border-left: 4px solid var(--primary); }
+        .sub-title { font-weight: bold; font-size: 14px; color: #0f172a; margin-bottom: 8px; display: block; border-bottom: 1px solid #cbd5e1; padding-bottom: 5px; }
+        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 8px; margin-top: 8px; }
+        label.chk-card { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; background: #fff; padding: 8px 10px; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; transition: 0.15s; line-height: 1.4;}
+        label.chk-card:hover { border-color: var(--primary); background: #f8fafc; }
+        label.chk-card input[type="checkbox"] { margin-top: 3px; accent-color: var(--primary); transform: scale(1.15); flex-shrink: 0;}
+
+        /* 生成結果區（位於各類下方） */
+        .output-box { margin-top: 15px; }
+        textarea { width: 100%; height: 180px; padding: 12px; border: 1px solid #94a3b8; border-radius: 6px; font-size: 14px; font-family: inherit; box-sizing: border-box; resize: vertical; background: #fcfcfc; }
+        textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15); }
+        
+        .btn-row { display: flex; gap: 10px; margin-top: 8px; }
+        button { cursor: pointer; border: none; border-radius: 6px; font-weight: bold; font-size: 14px; padding: 10px 16px; transition: 0.2s; }
+        .btn-copy { background: var(--primary); color: white; flex: 1; }
+        .btn-copy:hover { background: #115e59; }
+        .btn-reset-sec { background: #e2e8f0; color: #475569; }
+        .btn-reset-sec:hover { background: #cbd5e1; }
+        .btn-clear-all { background: #ef4444; color: white; width: 100%; padding: 14px; font-size: 16px; margin-top: 10px; }
+        .btn-clear-all:hover { background: #dc2626; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>📝 綜合問題與建議 (A單位專區)</h1>
+        <p class="subtitle">照顧計畫專用填寫模版</p>
+    </header>
+
+    <!-- 頂部導覽列 -->
+    <div class="nav-bar">
+        <a href="index.html">📞 家/電訪紀錄生成</a>
+        <a href="plan.html" class="active">📝 照顧計畫生成</a>
     </div>
 
+    <!-- 欄位 1: 計畫目標 -->
+    <div class="section-card" id="sec1">
+        <div class="section-title">* 計畫目標</div>
+        <span class="section-desc">※ 應敘明擬定依照照顧問題清單、欲改善重點及可運用服務項目，由A個管人員依照服務對象及其家庭照顧者需求，依正式或非正式資源運用情形，據以擬定照顧計畫目標</span>
+
+        <div class="Sub-group">
+            <span class="sub-title">▪ 1. 照顧服務目標 (B碼/日照)</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f1" value="1.提供照顧服務：協助沐浴及洗頭，維持身體清潔狀況、提昇個案生活舒適度。" onchange="updateField(1)"> B碼：維持清潔舒適</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f1" value="1.提供照顧服務：協助整理家務，維持個案居家環境清潔及陪同外出於住家外運動,與鄰居互動,增進社會參與及生活品質。" onchange="updateField(1)"> B碼：家務清潔、社會參與</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f1" value="1.提供照顧服務：協助個案營養均衡攝取，以提昇個案生活品質。" onchange="updateField(1)"> B碼：營養均衡</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f1" value="1.提供日照中心服務，建立個案規律生活作息、提昇個案社交頻率、延緩退化。" onchange="updateField(1)"> 日照：規律作息、延緩退化</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f1" value="1.提供日照中心服務，以督促訓練個案規律參與社區活動，促進認知，延緩失能失智。" onchange="updateField(1)"> 日照：社區活動、促進認知</label>
+            </div>
+        </div>
+
+        <div class="Sub-group">
+            <span class="sub-title">▪ 2. 專業服務目標 (C碼)</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f1" value="2.提供專業服務：期待透過復能訓練，提昇個案自我照顧能力、提昇自我價值。" onchange="updateField(1)"> C碼：復能訓練、自我價值</label>
+            </div>
+        </div>
+        
+        <div class="Sub-group">
+            <span class="sub-title">▪ 3. 交通接送目標 (D碼)</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f1" value="3.提供交通接送服務：協助就醫便利性及經濟性。" onchange="updateField(1)"> D碼：就醫便利性及經濟性</label>
+            </div>
+        </div>
+        
+        <div class="Sub-group">
+            <span class="sub-title">▪ 4. 輔具及環境改善目標 (EF碼)</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f1" value="4.提供無障礙環境改善及輔具：提供適切輔具及環境改善，維護個案生活安全、減輕家屬照顧壓力。" onchange="updateField(1)"> EF碼：生活安全、減輕壓力</label>
+            </div>
+        </div>
+        
+        <div class="Sub-group">
+            <span class="sub-title">▪ 5. 喘息服務目標 (G碼)</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f1" value="5.提供喘息服務：給予照顧者喘息空間及減緩照顧壓力。" onchange="updateField(1)"> G碼：喘息空間、減緩壓力</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f1" value="5.提供喘息服務：家庭主要照顧者，因外看請假自覺無法負荷照顧，而申請喘息服務用於外看請假期間。" onchange="updateField(1)"> G碼：外看請假期間使用</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f1" value="6.提供短照服務：家庭聘僱之外看有休假之需求。" onchange="updateField(1)"> 短照：外看休假需求</label>
+            </div>
+        </div>
+
+        <div class="output-box">
+            <textarea id="field1" placeholder="勾選上方項目後，將自動在此生成「計畫目標」..."></textarea>
+            <div class="btn-row">
+                <button class="btn-copy" onclick="copyText('field1')">📋 複製「計畫目標」</button>
+                <button class="btn-reset-sec" onclick="clearSection(1)">清除本欄</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 欄位 2: 計畫執行規劃 -->
+    <div class="section-card" id="sec2">
+        <div class="section-title">* 計畫執行規劃</div>
+        <span class="section-desc">※ 說明擬定照顧計畫與服務對象實際欲使用服務項目之落差原因，個案管理評估及決策情形</span>
+
+        <div class="Sub-group">
+            <span class="sub-title">▪ 1. 照顧服務執行規劃 (B碼/日照)</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="1.B碼照顧服務:\n(1)BA01 [基本身體清潔]*2單位/月\n(2)BA02 [基本日常照顧]*8單位/月 (協助餵藥、換尿布等)\n(3)BA03 [測量生命徵象]*23組/月\n(4)BA07 [協助沐浴及洗頭]*23組/月" onchange="updateField(2)"> 常用B碼 (BA01,02,03,07)</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="(1)BA11 [肢體關節活動]*23組/月\n--搭配專業居家復能指導執行，並依支付標準加計AA03。" onchange="updateField(2)"> BA11+AA03 關節活動搭配指導</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="(1)BA13 [陪同外出]*6組/月\n--陪同案主至OOOOO醫院，若超過1.5小時延長30分鐘，依實際服務核銷。\n(2)BA14 [陪同就醫]*3單位/月\n--陪同案主至OOOOO醫院就醫回診。" onchange="updateField(2)"> 陪同外出/就醫 (BA13, BA14)</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="核給B碼照顧服務:\n(1)BB09[日間照顧(全日)--第5型]:23單位/月 (每週5天)\n(2)BD03[社區服務交通接送]:2單位/月\n-額度不足部份由家屬再與日照中心討論自費金額或自行接送。" onchange="updateField(2)"> 日照與社區交通 (BB09, BD03)</label>
+            </div>
+        </div>
+        
+        <div class="Sub-group">
+            <span class="sub-title">▪ 2. 專業服務執行規劃 (C碼)</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="2.C碼專業服務:\n(1)CA07 [ADLs復能照護]*3組/12週\n-目標：" onchange="updateField(2)"> C碼復能照護 (CA07)</label>
+            </div>
+        </div>
+        
+        <div class="Sub-group">
+            <span class="sub-title">▪ 3. 交通接送執行規劃 (D碼)</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="3.DA碼交通接送服務：\nDA01[交通接送]:2000元/月" onchange="updateField(2)"> D碼交通接送 (DA01)</label>
+            </div>
+        </div>
+        
+        <div class="Sub-group">
+            <span class="sub-title">▪ 4. 輔具及無障礙執行規劃 (EF碼)</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="4.EF碼：無障礙環境改善及輔具\n實際提供項目、長度、款式皆請參見環改及輔具評估建議書。不需到宅評估，與案家說明相關輔具購買申請流程。" onchange="updateField(2)"> EF碼說明 (不需到宅)</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="4.EF碼：無障礙環境改善及輔具\n需到站評估，提供案家輔具中心電話並提醒需先預約。" onchange="updateField(2)"> EF碼說明 (需預約到站評估)</label>
+            </div>
+        </div>
+        
+        <div class="Sub-group">
+            <span class="sub-title">▪ 5. 喘息服務執行規劃 (G碼)</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="5.G碼喘息服務:\nGA09 居家喘息*32340元/年\n喘息額度期間：(服務使用期限依額度控管設定內起迄月份為主)" onchange="updateField(2)"> GA09 居家喘息 (32340/年)</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="5.G碼喘息服務:\nGA03 [日間照顧中心喘息服務--全日]*31,250/年 (25天)\n喘息額度期間：(服務使用期限依額度控管設定內起迄月份為主)" onchange="updateField(2)"> GA03 日照全日喘息</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="6.SC碼短期照顧服務:\nSC09 [居家短照服務]*87780元/年 (114組)" onchange="updateField(2)"> SC09 居家短照 (87780/年)</label>
+            </div>
+        </div>
+        
+        <div class="Sub-group">
+            <span class="sub-title">▪ 6. 未核給服務寫法 (落差原因)</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="未介入服務:\n1.B碼照顧服務: 案長子表示目前有台籍看護工協助照顧，故暫不需此資源介入。" onchange="updateField(2)"> B碼：已有台看協助</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="未介入服務:\n2.C碼專業服務: 案長子表示因OOOOO故暫不需此資源介入。" onchange="updateField(2)"> C碼：家屬表示不需介入</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="未介入服務:\n4.DA01交通接送服務: 案長子表示目前尚可自行載送，暫無此資源需求。" onchange="updateField(2)"> D碼：家屬可自行載送</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="未介入服務:\n5.社區失智據點: 個案為基督教教友每週皆參加教會聚會，目前暫無該服務需求。" onchange="updateField(2)"> 據點：已有教會活動</label>
+            </div>
+        </div>
+
+        <div class="output-box">
+            <textarea id="field2" placeholder="勾選上方項目後，將自動在此生成「計畫執行規劃」..."></textarea>
+            <div class="btn-row">
+                <button class="btn-copy" onclick="copyText('field2')">📋 複製「計畫執行規劃」</button>
+                <button class="btn-reset-sec" onclick="clearSection(2)">清除本欄</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 欄位 3: 其他備註 -->
+    <div class="section-card" id="sec3">
+        <div class="section-title">其他備註</div>
+        <span class="section-desc">※ 其他未盡事宜 (如派案狀況、社區連結、支持服務、簽名確認等)</span>
+
+        <div class="Sub-group">
+            <span class="sub-title">▪ 單位派案與服務狀況</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="1.B碼照顧服務: 案家無指定服務單位，予以高雄市照管系統輪派。" onchange="updateField(3)"> B碼：無指定，系統輪派</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="2.C碼專業服務: 案家無指定服務單位，將以專業名冊輪派。" onchange="updateField(3)"> C碼：無指定，名冊輪派</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="3.D碼交通接送服務: 輪派小驢駒、伊甸等特約單位。" onchange="updateField(3)"> D碼：輪派特約單位</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="4.G碼喘息服務: 需要時指派。" onchange="updateField(3)"> G碼：需要時指派</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="B碼照顧服務：家屬對於服務品質滿意，同意續由原單位提供服務；GA碼為需要時指派。" onchange="updateField(3)"> B碼續用原單位</label>
+            </div>
+        </div>
+
+        <div class="Sub-group">
+            <span class="sub-title">▪ 其他資源連結與支持</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="建議社區活動參與：OO區OO里失智社區據點/醫事C據點。" onchange="updateField(3)"> 連結：失智據點/醫事C</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="提供中華民國家庭照顧者關懷總會關懷專線，可致電專線尋求支持服務。" onchange="updateField(3)"> 支持：家總關懷專線</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="提供法扶基金會服務訊息，可致電詢問請求手足協助扶養，減輕照顧負擔。" onchange="updateField(3)"> 法律：法扶基金會資訊</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="提供相關安寧居家服務諮詢，及安寧緩和醫療條例資訊。" onchange="updateField(3)"> 諮詢：安寧居家服務</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="提供協助愛盲白手杖申請單，請家屬協助代為傳真申請及領取。" onchange="updateField(3)"> 資源：白手杖申請資訊</label>
+            </div>
+        </div>
+        
+        <div class="Sub-group">
+            <span class="sub-title">▪ 計畫確認與結尾簽名</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="個案/家屬對於擬定計畫之內容能完全理解，並閱讀長照使用說明書及完成簽名。" onchange="updateField(3)"> 確認：理解計畫並簽名</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f3" value="此計畫核定人員為 長照個管 趙善琳 (07-693-5389)\n訪視日期：115年05月__日　完成計畫日期：115年05月__日" onchange="updateField(3)"> 結尾：核定人員與日期簽署</label>
+            </div>
+        </div>
+
+        <div class="output-box">
+            <textarea id="field3" placeholder="勾選上方項目後，將自動在此生成「其他備註」..."></textarea>
+            <div class="btn-row">
+                <button class="btn-copy" onclick="copyText('field3')">📋 複製「其他備註」</button>
+                <button class="btn-reset-sec" onclick="clearSection(3)">清除本欄</button>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-clear-all" onclick="resetAll()">🗑️ 全部取消勾選並清空（準備輸入下一位個案）</button>
 </div>
+
+<script>
+    // 更新單一欄位內容
+    function updateField(num) {
+        const checkboxes = document.querySelectorAll('.chk-f' + num + ':checked');
+        const lines = [];
+        checkboxes.forEach(chk => {
+            // 【重要修復】將 HTML 中的字串 \n 轉換為真實的換行符號
+            let text = chk.value.replace(/\\n/g, '\n');
+            lines.push(text);
+        });
+        document.getElementById('field' + num).value = lines.join('\n\n');
+    }
+
+    // 清除單一欄位的勾選與文字
+    function clearSection(num) {
+        const checkboxes = document.querySelectorAll('.chk-f' + num);
+        checkboxes.forEach(chk => chk.checked = false);
+        document.getElementById('field' + num).value = '';
+    }
+
+    // 複製功能
+    function copyText(fieldId) {
+        const field = document.getElementById(fieldId);
+        if (!field.value.trim()) {
+            alert('⚠ 此欄位目前沒有內容，請先在上方打勾或手動輸入文字！');
+            return;
+        }
+        field.select();
+        field.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(field.value).then(() => {
+            alert('✅ 複製成功！請直接貼上至申報系統。');
+        }).catch(err => {
+            alert('複製失敗，請手動選取文字複製。');
+        });
+    }
+
+    // 全部重置
+    function resetAll() {
+        if (confirm('確定要清空所有勾選與內容，開始下一位個案嗎？')) {
+            document.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById('field' + i).value = '';
+            }
+        }
+    }
+</script>
 
 </body>
 </html>
