@@ -111,12 +111,13 @@
         <div class="Sub-group">
             <span class="sub-title">▪ BA碼 照顧服務</span>
             <div class="checkbox-grid">
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】個案目前由B單位-【{unitB}】定期提供照顧，起居作息維持平穩。【{role}】表示居服員工作細心，案家肯定服務整體品質，後續仍有服務需求。" onchange="updateField(2)"> 居服：起居平穩、工作細心</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】目前由B單位-【{unitB}】定期提供照顧，起居作息維持平穩。【{role}】表示居服員工作細心，案家肯定服務整體品質，後續仍有服務需求。" onchange="updateField(2)"> 居服：起居平穩、工作細心</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】經追蹤B單位-【{unitB}】服務情形，居服員動作熟練，與案家建立良好信任，服務態度親切且專業。服務項目皆確實執行，工作完成度佳，後續仍有服務需求。" onchange="updateField(2)"> 居服：動作熟練、建立信任</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】訪視詢問案家意見，【{role}】表達目前B單位-【{unitB}】居服員皆能依約定時間準時進家提供服務，各項照顧內容均符合預期，服務滿意度高，後續仍有服務需求。" onchange="updateField(2)"> 居服：準時到宅、符合預期</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】個案表示 B單位【{unitB}】提供穩定且準時，表示後續仍有照顧服務需求。" onchange="updateField(2)"> 居服：簡潔 (穩定且準時)</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】表示 B單位【{unitB}】提供穩定且準時，表示後續仍有照顧服務需求。" onchange="updateField(2)"> 居服：簡潔 (穩定且準時)</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【日照服務】個案於【{unitB}】接受日照服務狀況平穩。機構每日確實透過聯絡簿或LINE告知個案狀況，家屬對整體品質表達高度認同，後續仍有服務需求。" onchange="updateField(2)"> 日照：狀況平穩、聯絡簿溝通</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】透過居服員定期協助日常照顧，有效維持個案生活起居品質並減輕家屬照顧負荷，照顧目標穩定達成中。" onchange="updateField(2)"> 目標：維持品質、減輕負荷</label>
+             <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】本月截至電訪日未使用。" onchange="updateField(2)"> 未使用：本月暫停服務</label
             </div>
         </div>
 
@@ -126,6 +127,8 @@
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼 專業服務】服務單位-【{unitOther}】，追蹤每次服務時間皆足60分鐘。個案對復能指導接受度高且互動良好，指導內容符合期待，後續仍有服務需求。" onchange="updateField(2)"> C碼：足60分、接受度高</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼 專業服務】服務單位-【{unitOther}】，案家肯定專業人員指導態度，講解細心且自我執行無困難，每次結束皆提醒注意事項並留存紀錄，後續仍有服務需求。" onchange="updateField(2)"> C碼：講解細心、家屬可自執行</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼 專業服務】專業服務介入後，主要照顧者能充分理解關節活動/轉移位/飲食指導技巧，自行操作無問題，有效提升家庭自主照顧能力。" onchange="updateField(2)"> 目標：家屬熟稔技巧</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼 專業服務】本月截至電訪日未使用。" onchange="updateField(2)"> 未使用：本月暫停服務</label
+ 
             </div>
         </div>
 
@@ -255,6 +258,12 @@
     function updateField(num) {
         const checkboxes = document.querySelectorAll('.chk-f' + num + ':checked');
         const lines = [];
+        
+        // 如果是第 4 欄，強制在陣列最前面加入一個空字串（產生一列空白）
+        if (num === 4) {
+            lines.push(''); 
+        }
+
         checkboxes.forEach(chk => {
             lines.push(replaceVars(chk.value));
         });
