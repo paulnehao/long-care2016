@@ -254,20 +254,25 @@
             .replace(/\{unitOther\}/g, unitOther);
     }
 
-    // 更新單一欄位內容
-    // 更新單一欄位內容
+   // 更新單一欄位內容
     function updateField(num) {
         const checkboxes = document.querySelectorAll('.chk-f' + num + ':checked');
         const lines = [];
 
         checkboxes.forEach(chk => {
             let text = replaceVars(chk.value);
+            
+            // 先把當前的文字推入陣列（這保證了文字會在最上面）
             lines.push(text);
             
-            // 【修改處】如果是第 4 欄，且剛好印出「1. 訪視對象：...」這一行時，就在它後面加入一行空白
+            // 【修改處】如果是第 4 欄，且剛剛推入的那一行是「1. 訪視對象：...」，就在它後面緊接著推入一行空白
             if (num === 4 && text.startsWith('1. 訪視對象：')) {
                 lines.push(''); 
             }
+        });
+        
+        document.getElementById('field' + num).value = lines.join('\n');
+    }
         });
         
         document.getElementById('field' + num).value = lines.join('\n');
