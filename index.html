@@ -28,11 +28,14 @@
         .section-card { border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 25px; background: #fff; }
         .section-title { font-size: 18px; font-weight: bold; color: var(--primary); margin: 0 0 6px 0; display: flex; align-items: center; justify-content: space-between; }
         .section-desc { font-size: 13px; color: #d97706; margin-bottom: 15px; font-weight: bold; display: block; }
+        
+        /* 紅字備註特效 */
+        .desc-red { color: #dc2626; font-size: 14px; }
 
         /* 問卷 Checkbox 群組 */
         .Sub-group { margin-bottom: 14px; background: var(--primary-light); padding: 12px 15px; border-radius: 8px; border-left: 4px solid var(--primary); }
-        .sub-title { font-weight: bold; font-size: 14px; color: #0f172a; margin-bottom: 8px; display: block; }
-        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px; }
+        .sub-title { font-weight: bold; font-size: 14px; color: #0f172a; margin-bottom: 8px; display: block; border-bottom: 1px solid #cbd5e1; padding-bottom: 5px; }
+        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px; margin-top: 8px; }
         label.chk-card { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; background: #fff; padding: 8px 10px; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; transition: 0.15s; }
         label.chk-card:hover { border-color: var(--primary); background: #f8fafc; }
         label.chk-card input[type="checkbox"] { margin-top: 4px; accent-color: var(--primary); transform: scale(1.15); }
@@ -67,10 +70,9 @@
             <select id="targetRole" onchange="updateAll()">
                 <option value="家屬">家屬</option>
                 <option value="個案">個案本人</option>
-                <option value="案長子">案子</option>
-                <option value="案長女">案女</option>
+                <option value="案長子">案長子</option>
+                <option value="案長女">案長女</option>
                 <option value="案配偶">案配偶</option>
-                <option value="案配偶">其他家屬</option>
             </select>
         </div>
         <div class="config-item">
@@ -90,37 +92,10 @@
     <!-- 欄位 1 -->
     <div class="section-card" id="sec1">
         <div class="section-title">1. 追蹤服務適應與介入情形</div>
-        <span class="section-desc">※ 勾選本次追蹤之服務項目（系統將依上方輸入之單位名稱自動帶入）：</span>
-
-        <div class="Sub-group">
-            <span class="sub-title">▪ B碼 居家服務 / 日照服務</span>
-            <div class="checkbox-grid">
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="1.B碼照顧服務：個案目前由B單位-【{unitB}】定期提供照顧，起居作息維持平穩。【{role}】表示居服員工作細心，案家肯定服務整體品質，後續仍有服務需求。" onchange="updateField(1)"> 居服：起居平穩、工作細心</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="1.B碼照顧服務：經追蹤B單位-【{unitB}】服務情形，表示提供穩定且準時，表示後續仍有照顧服務需求。" onchange="updateField(1)"> 居服：簡潔</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="1.B碼照顧服務：經追蹤B單位-【{unitB}】服務情形，居服員動作熟練，與案家建立良好信任，服務態度親切且專業，工作完成度佳，後續仍有服務需求。" onchange="updateField(1)"> 居服：動作熟練、建立信任</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="1.B碼照顧服務：訪視詢問案家意見，【{role}】表達目前B單位-【{unitB}】居服員皆能依約定時間準時進家提供服務，各項照顧內容均符合預期，後續仍有服務需求。" onchange="updateField(1)"> 居服：準時到宅、符合預期</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="1.B碼照顧服務：個案於【{unitB}】接受日照服務狀況平穩。機構每日確實透過聯絡簿或LINE告知個案狀況，家屬對整體品質表達高度認同，後續仍有服務需求。" onchange="updateField(1)"> 日照：狀況平穩、聯絡簿溝通佳</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="1.B碼照顧服務：個案穩定參與【{unitB}】日照服務。家屬肯定單位活動安排豐富多元，工作人員親切會適時提供個案情緒支持，有效增進長輩參與意願，後續仍有服務需求。" onchange="updateField(1)"> 日照：活動多元、情緒支持</label>
-            </div>
-        </div>
-
-        <div class="Sub-group">
-            <span class="sub-title">▪ C碼 專業服務 / D碼 交通 / 社區交通 / 據點 / 營養餐</span>
-            <div class="checkbox-grid">
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="2.C碼專業服務：服務單位-【{unitOther}】，追蹤每次服務時間皆足60分鐘。個案對復能指導接受度高且互動良好，指導內容符合期待，後續仍有服務需求。" onchange="updateField(1)"> C碼：足60分、接受度高</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="2.C碼專業服務：服務單位-【{unitOther}】，案家肯定專業人員指導態度，講解細心且自我執行無困難，每次結束皆提醒注意事項並留存紀錄，後續仍有服務需求。" onchange="updateField(1)"> C碼：講解細心、家屬可自執行</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="2.D碼交通接送：服務單位-【{unitOther}】，案家已熟稔預約流程，本月皆能自行順利約車。家屬對整體服務品質滿意度極高，大幅提升就醫便利性，後續仍有服務需求。" onchange="updateField(1)"> D碼：順利約車、提升就醫便利</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="2.D碼交通接送：服務單位-【{unitOther}】，個案就醫車程平穩，駕駛人員態度親切有禮，能耐心協助長輩上下車確保乘車安全，後續仍有服務需求。" onchange="updateField(1)"> D碼：車程平穩、司機親切安全</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="社區交通接送：服務單位-【{unitOther}】，個案持續搭乘社區交通車前往據點。司機服務態度親切且接送規律準時，讓長輩安心參與活動，後續仍有服務需求。" onchange="updateField(1)"> 社區交通：規律準時、安心參與</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="3.OT營養餐服務：服務單位-【{unitOther}】，每日準時送達且餐食均衡，有助維持個案基本營養與健康，案家肯定服務品質，後續仍有服務需求。" onchange="updateField(1)"> OT營養餐：準時送達、營養均衡</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="失智據點：個案目前仍持續規律參與失智據點舉辦之各項活動，並表示對單位所提供的服務品質相當滿意。" onchange="updateField(1)"> 失智據點：規律參與、品質滿意</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="G碼喘息服務：本月截至電訪尚未申請使用。" onchange="updateField(1)"> 未使用：G碼喘息尚未申請</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f1" value="D碼交通接送服務：本月截至電訪尚未申請使用。" onchange="updateField(1)"> 未使用：D碼交通尚未申請</label>
-            </div>
-        </div>
+        <span class="section-desc desc-red">※ 請貼最新一筆照顧計劃</span>
 
         <div class="output-box">
-            <textarea id="field1" placeholder="勾選上方項目後，將自動在此生成「1. 追蹤服務適應與介入情形」..."></textarea>
+            <textarea id="field1" placeholder="請在此貼上最新一筆照顧計劃..."></textarea>
             <div class="btn-row">
                 <button class="btn-copy" onclick="copyText('field1')">📋 複製「1. 追蹤服務適應與介入情形」</button>
                 <button class="btn-reset-sec" onclick="clearSection(1)">清除本欄</button>
@@ -131,16 +106,62 @@
     <!-- 欄位 2 -->
     <div class="section-card" id="sec2">
         <div class="section-title">2. 各項服務目標及整體計畫目標達成情形</div>
-        <span class="section-desc">※ 勾選各服務類別執行狀況與計畫目標達成度：</span>
+        <span class="section-desc">※ 書寫內容：照顧計劃中各服務類別服務執行狀況。請勾選相關項目：</span>
 
         <div class="Sub-group">
+            <span class="sub-title">▪ BA碼 照顧服務</span>
             <div class="checkbox-grid">
-                <button onclick="addText('field1', '個案表示 B單位【OO居家】提供穩定且準時，表示後續仍有照顧服務需求。\n')">+ 居服 (簡潔)</button>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="透過居服員定期協助日常照顧，有效維持個案生活起居品質並減輕家屬照顧負荷，照顧目標穩定達成中。" onchange="updateField(2)"> 居服目標：維持品質、減輕負荷</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="個案白天於日照中心接受妥善照顧，大幅減輕家屬外出工作之心理壓力，日常照顧負荷獲有效紓解，目標穩定達成。" onchange="updateField(2)"> 日照目標：妥善托顧、紓解家屬壓力</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="專業服務介入後，主要照顧者能充分理解關節活動/轉移位/飲食指導技巧，自行操作無問題，有效提升家庭自主照顧能力。" onchange="updateField(2)"> 專業目標：家屬熟稔技巧、提升自主能力</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="透過長照交通車補助，順利解決往返醫療院所之交通問題，減輕家屬經濟負擔與請假接送壓力，目標穩定達成。" onchange="updateField(2)"> 交通目標：解決就醫痛點、減輕經濟負擔</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="整體計畫目標：目前各項長照服務皆穩定執行，有效協助個案維持現有生活功能，整體計畫目標穩定達成中。" onchange="updateField(2)"> 整體目標：維持生活功能、整體穩定達成</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】個案目前由B單位-【{unitB}】定期提供照顧，起居作息維持平穩。【{role}】表示居服員工作細心，案家肯定服務整體品質，後續仍有服務需求。" onchange="updateField(2)"> 居服：起居平穩、工作細心</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】經追蹤B單位-【{unitB}】服務情形，居服員動作熟練，與案家建立良好信任，服務態度親切且專業。服務項目皆確實執行，工作完成度佳，後續仍有服務需求。" onchange="updateField(2)"> 居服：動作熟練、建立信任</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】訪視詢問案家意見，【{role}】表達目前B單位-【{unitB}】居服員皆能依約定時間準時進家提供服務，各項照顧內容均符合預期，服務滿意度高，後續仍有服務需求。" onchange="updateField(2)"> 居服：準時到宅、符合預期</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】個案表示 B單位【{unitB}】提供穩定且準時，表示後續仍有照顧服務需求。" onchange="updateField(2)"> 居服：簡潔 (穩定且準時)</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【日照服務】個案於【{unitB}】接受日照服務狀況平穩。機構每日確實透過聯絡簿或LINE告知個案狀況，家屬對整體品質表達高度認同，後續仍有服務需求。" onchange="updateField(2)"> 日照：狀況平穩、聯絡簿溝通</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】透過居服員定期協助日常照顧，有效維持個案生活起居品質並減輕家屬照顧負荷，照顧目標穩定達成中。" onchange="updateField(2)"> 目標：維持品質、減輕負荷</label>
+            </div>
+        </div>
+
+        <div class="Sub-group">
+            <span class="sub-title">▪ C碼 專業服務</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼 專業服務】服務單位-【{unitOther}】，追蹤每次服務時間皆足60分鐘。個案對復能指導接受度高且互動良好，指導內容符合期待，後續仍有服務需求。" onchange="updateField(2)"> C碼：足60分、接受度高</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼 專業服務】服務單位-【{unitOther}】，案家肯定專業人員指導態度，講解細心且自我執行無困難，每次結束皆提醒注意事項並留存紀錄，後續仍有服務需求。" onchange="updateField(2)"> C碼：講解細心、家屬可自執行</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼 專業服務】專業服務介入後，主要照顧者能充分理解關節活動/轉移位/飲食指導技巧，自行操作無問題，有效提升家庭自主照顧能力。" onchange="updateField(2)"> 目標：家屬熟稔技巧</label>
+            </div>
+        </div>
+
+        <div class="Sub-group">
+            <span class="sub-title">▪ D碼 交通服務</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【D碼 交通服務】服務單位-【{unitOther}】，案家已熟稔預約流程，本月皆能自行順利約車。家屬對整體服務品質滿意度極高，大幅提升就醫便利性，後續仍有服務需求。" onchange="updateField(2)"> D碼：順利約車</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【D碼 交通服務】服務單位-【{unitOther}】，個案就醫車程平穩，駕駛人員態度親切有禮，能耐心協助長輩上下車確保乘車安全，後續仍有服務需求。" onchange="updateField(2)"> D碼：車程平穩、司機親切</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【D碼 交通服務】透過長照交通車補助，順利解決往返醫療院所之交通問題，減輕家屬經濟負擔與請假接送壓力，目標穩定達成。" onchange="updateField(2)"> 目標：解決就醫痛點、減輕負擔</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【D碼 交通服務】本月截至電訪尚未申請使用。" onchange="updateField(2)"> 未使用：本月未申請</label>
+            </div>
+        </div>
+
+        <div class="Sub-group">
+            <span class="sub-title">▪ EF碼 輔具及無障礙環改服務</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【EF碼 輔具及無障礙】目前輔具使用狀況良好，個案適應佳，能有效協助日常活動並維護居家安全，目標穩定達成。" onchange="updateField(2)"> 輔具：使用良好、適應佳</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【EF碼 輔具及無障礙】家屬表示近期有新增/調整輔具之需求，將協助重新評估。" onchange="updateField(2)"> 輔具：有新增/調整需求</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【EF碼 輔具及無障礙】本月無相關服務介入。" onchange="updateField(2)"> 未使用：本月無介入</label>
+            </div>
+        </div>
+
+        <div class="Sub-group">
+            <span class="sub-title">▪ G碼 喘息服務</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【G碼 喘息服務】本月有使用喘息服務，個案適應狀況良好，有效紓解家屬照顧壓力，後續仍有服務需求。" onchange="updateField(2)"> 喘息：適應良好、紓壓</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【G碼 喘息服務】本月截至電訪尚未申請使用。" onchange="updateField(2)"> 未使用：本月未申請</label>
+            </div>
+        </div>
+        
+        <div class="Sub-group">
+            <span class="sub-title">▪ 其他 (營養餐 / 據點 / 整體目標)</span>
+            <div class="checkbox-grid">
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【營養餐服務】服務單位-【{unitOther}】，每日準時送達且餐食均衡，有助維持個案基本營養與健康，案家肯定服務品質。" onchange="updateField(2)"> OT營養餐：準時均衡</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【失智據點】個案目前仍持續規律參與失智據點舉辦之各項活動，並表示對單位所提供的服務品質相當滿意。" onchange="updateField(2)"> 失智據點：規律參與</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【整體計畫目標】目前各項長照服務皆穩定執行，有效協助個案維持現有生活功能，整體計畫目標穩定達成中。" onchange="updateField(2)"> 整體目標：穩定達成中</label>
             </div>
         </div>
 
@@ -153,7 +174,7 @@
         </div>
     </div>
 
-<!-- 欄位 3 -->
+    <!-- 欄位 3 -->
     <div class="section-card" id="sec3">
         <div class="section-title">3. 整體計畫的適切性及需求異動</div>
         <span class="section-desc">※ 勾選當月是否有提出計畫異動、無調整需求或複評/新案說明：</span>
@@ -163,8 +184,6 @@
                 <label class="chk-card"><input type="checkbox" class="chk-f3" value="現階段照顧需求穩定，本月服務計畫內容與額度維持不變，暫無異動需求。" onchange="updateField(3)"> 無異動：需求穩定、計畫與額度不變</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f3" value="目前服務頻率與項目皆切合所需，【{role}】本月表達暫無異動或調整服務計畫之需求。" onchange="updateField(3)"> 無異動：切合所需、案家無調整需求</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f3" value="因應個案近期照顧需求改變，本月提出計畫異動申請，已協助調整服務項目並照會相關特約單位。" onchange="updateField(3)"> 有異動：需求改變、已調整計畫並照會單位</label>
-                
-                <!-- 👇 以下為本次新增的 2 個選項 👇 -->
                 <label class="chk-card"><input type="checkbox" class="chk-f3" value="已向家屬【個案】解釋目前長照服務內容並交付高雄市長期照顧服務使用說明單。" onchange="updateField(3)"> 複評/AA01</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f3" value="已向家屬【個案】詳細說明目前核定之長照服務項目、額度及部分負擔比例，並正式交付「高雄市長期照顧服務使用說明單」，以保障案方已知悉相關長照權益與申訴管道。" onchange="updateField(3)"> 新案/出備案</label>
             </div>
@@ -179,7 +198,6 @@
         </div>
     </div>
 
-    
     <!-- 欄位 4 -->
     <div class="section-card" id="sec4">
         <div class="section-title">4. 其他處理事項 (備註事項)</div>
@@ -261,13 +279,15 @@
     function copyText(fieldId) {
         const field = document.getElementById(fieldId);
         if (!field.value.trim()) {
-            alert('⚠️️ 此欄位目前沒有內容，請先在上方打勾或手動輸入文字！');
+            alert('⚠ 此欄位目前沒有內容，請先在上方打勾或手動輸入文字！');
             return;
         }
         field.select();
         field.setSelectionRange(0, 99999);
         navigator.clipboard.writeText(field.value).then(() => {
             alert('✅ 複製成功！請直接貼上至高雄市申報系統。');
+        }).catch(err => {
+            alert('複製失敗，請手動選取文字複製。');
         });
     }
 
@@ -279,6 +299,8 @@
                 document.getElementById('field' + i).value = '';
             }
             document.getElementById('targetPhone').value = '';
+            // 重新帶入預設勾選
+            updateAll();
         }
     }
 
