@@ -1,1 +1,52 @@
+HTML
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>照顧計畫生成器 - 高雄市 A單位</title>
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-light: #f0fdfa;
+            --border: #cbd5e1;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+        body { font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; margin: 0; }
+        .container { max-width: 960px; margin: auto; background: #fff; padding: 28px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+        header { border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
+        h1 { color: var(--primary); margin: 0 0 6px 0; font-size: 24px; }
+        .subtitle { color: #64748b; font-size: 14px; margin: 0; }
+        
+        /* 導覽列特效 */
+        .nav-bar { background: #0f766e; padding: 10px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; }
+        .nav-bar a { color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; transition: 0.2s; }
+        .nav-bar a:hover { background: rgba(255,255,255,0.2); }
+        .nav-bar a.active { background: rgba(255,255,255,0.3); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
 
+<div class="container">
+    <header>
+        <h1>📝 高雄市 A單位照顧計畫生成器</h1>
+        <p class="subtitle">專為照顧計畫撰寫設計的快速填寫模版</p>
+    </header>
+
+    <!-- 頂部導覽列 (此頁面會讓「照顧計畫」亮起) -->
+    <div class="nav-bar">
+        <a href="index.html">📞 家/電訪紀錄生成</a>
+        <a href="plan.html" class="active">📝 照顧計畫生成</a>
+    </div>
+
+    <!-- 這裡預留給未來的照顧計畫表單 -->
+    <div style="text-align: center; padding: 50px; color: #64748b;">
+        <h2>照顧計畫的欄位與詞庫準備中...</h2>
+        <p>您可以將需要的欄位（例如：問題確立、照顧目標、介入措施等）貼給我，我再來幫您把這頁的表單寫出來！</p>
+    </div>
+
+</div>
+
+</body>
+</html>
