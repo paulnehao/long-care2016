@@ -1,3 +1,4 @@
+HTML
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -18,12 +19,6 @@
         header { border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
         h1 { color: var(--primary); margin: 0 0 6px 0; font-size: 24px; }
         .subtitle { color: #64748b; font-size: 14px; margin: 0; }
-        
-        /* 導覽列特效 */
-        .nav-bar { background: #0f766e; padding: 10px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; }
-        .nav-bar a { color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; transition: 0.2s; }
-        .nav-bar a:hover { background: rgba(255,255,255,0.2); }
-        .nav-bar a.active { background: rgba(255,255,255,0.3); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.3); }
         
         /* 各大欄位區塊 */
         .section-card { border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 25px; background: #fff; }
@@ -57,16 +52,9 @@
 
 <div class="container">
     <header>
-        <h1>📝 綜合問題與建議 (A單位專區)</h1>
-        <p class="subtitle">照顧計畫專用填寫模版</p>
+        <h1>📝 照顧計畫生成器 (A單位專區)</h1>
+        <p class="subtitle">獨立離線版 - 雙擊檔案即可使用，無需連接網路</p>
     </header>
-
-    <!-- 頂部導覽列 -->
-    <div class="nav-bar">
-        <!-- 這裡我幫您改成了連向 careplan.html -->
-        <a href="index.html">📞 家/電訪紀錄生成</a>
-        <a href="careplan.html" class="active">📝 照顧計畫生成</a>
-    </div>
 
     <!-- 欄位 1: 計畫目標 -->
     <div class="section-card" id="sec1">
