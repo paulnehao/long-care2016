@@ -2,11 +2,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
- <!-- 頂部導覽列 -->
-    <div style="background: #0f766e; padding: 10px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; justify-content: center;">
-        <a href="index.html" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; background: rgba(255,255,255,0.2);">📞 家/電訪紀錄生成</a>
-      <a href="https://paulnehao.github.io/test/" target="_blank" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; transition: 0.2s;">📝 照顧計畫生成</a>
-    </div>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>高雄市 A單位家/電訪輔助生成器</title>
@@ -68,6 +63,12 @@
         <p class="subtitle">以問卷勾選方式快速組合紀錄，生成結果直接顯示於各欄位正下方（內建 AA02 專業詞庫）</p>
     </header>
 
+    <!-- 頂部導覽列 (移到正確的位置了) -->
+    <div style="background: #0f766e; padding: 10px; border-radius: 8px; margin-bottom: 25px; display: flex; gap: 10px; justify-content: center;">
+        <a href="index.html" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; background: rgba(255,255,255,0.2);">📞 家/電訪紀錄生成</a>
+        <a href="https://paulnehao.github.io/long-care2016/careplan.html" target="_blank" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; transition: 0.2s;">📝 照顧計畫生成</a>
+    </div>
+
     <!-- 頂部連動參數區 -->
     <div class="config-box">
         <div class="config-item">
@@ -122,7 +123,7 @@
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】表示 B單位【{unitB}】提供穩定且準時，表示後續仍有照顧服務需求。" onchange="updateField(2)"> 居服：簡潔 (穩定且準時)</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【日照服務】個案於【{unitB}】接受日照服務狀況平穩。機構每日確實透過聯絡簿或LINE告知個案狀況，家屬對整體品質表達高度認同，後續仍有服務需求。" onchange="updateField(2)"> 日照：狀況平穩、聯絡簿溝通</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】透過居服員定期協助日常照顧，有效維持個案生活起居品質並減輕家屬照顧負荷，照顧目標穩定達成中。" onchange="updateField(2)"> 目標：維持品質、減輕負荷</label>
-             <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】本月截至電訪日未使用。" onchange="updateField(2)"> 未使用：本月暫停服務</label
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼 照顧服務】本月截至電訪日未使用。" onchange="updateField(2)"> 未使用：本月暫停服務</label>
             </div>
         </div>
 
@@ -132,8 +133,7 @@
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼 專業服務】服務單位-【{unitOther}】，追蹤每次服務時間皆足60分鐘。個案對復能指導接受度高且互動良好，指導內容符合期待，後續仍有服務需求。" onchange="updateField(2)"> C碼：足60分、接受度高</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼 專業服務】服務單位-【{unitOther}】，案家肯定專業人員指導態度，講解細心且自我執行無困難，每次結束皆提醒注意事項並留存紀錄，後續仍有服務需求。" onchange="updateField(2)"> C碼：講解細心、家屬可自執行</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼 專業服務】專業服務介入後，主要照顧者能充分理解關節活動/轉移位/飲食指導技巧，自行操作無問題，有效提升家庭自主照顧能力。" onchange="updateField(2)"> 目標：家屬熟稔技巧</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼 專業服務】本月截至電訪日未使用。" onchange="updateField(2)"> 未使用：本月暫停服務</label
- 
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼 專業服務】本月截至電訪日未使用。" onchange="updateField(2)"> 未使用：本月暫停服務</label>
             </div>
         </div>
 
@@ -278,10 +278,7 @@
         
         document.getElementById('field' + num).value = lines.join('\n');
     }
-        });
-        
-        document.getElementById('field' + num).value = lines.join('\n');
-    }
+
     // 當頂部參數改變時，同步更新四個欄位
     function updateAll() {
         for (let i = 1; i <= 4; i++) {
