@@ -179,7 +179,7 @@
         <div class="Sub-group">
             <span class="sub-title">▪ 其他 (營養餐 / 據點 / 整體目標)</span>
             <div class="checkbox-grid">
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【營養餐】單位-【{unitD}】，每日準時送達且餐食均衡。有助維持基本營養，案家肯定服務品質。" onchange="updateField(2)"> OT營養餐：準時均衡</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【營養餐】單位-【{unitMeal}】，每日準時送達且餐食均衡。有助維持基本營養，案家肯定服務品質。" onchange="updateField(2)"> OT營養餐：準時均衡</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【失智據點】個案持續規律參與據點活動，對服務品質表示滿意。" onchange="updateField(2)"> 失智據點：規律參與</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【整體計畫目標】各項長照服務穩定執行，有效協助個案維持生活功能，整體目標穩定達成中。" onchange="updateField(2)"> 整體目標：穩定達成中</label>
             </div>
@@ -261,17 +261,20 @@
     function replaceVars(text) {
         const role = document.getElementById('targetRole').value || '家屬';
         const phone = document.getElementById('targetPhone').value || '';
-        const unitB = document.getElementById('unitB').value || 'OO居家';
-        const unitC = document.getElementById('unitC').value || 'OO治療所';
-        const unitD = document.getElementById('unitD').value || 'OO單位';
+        const unitHomeCare = document.getElementById('unitHomeCare').value || 'OO居家';
+        const unitDayCare = document.getElementById('unitDayCare').value || 'OO日照';
+        const unitC = document.getElementById('unitC').value || '特約C單位';
+        const unitD = document.getElementById('unitD').value || '特約D單位';
+        const unitMeal = document.getElementById('unitMeal').value || '送餐單位';
 
         return text
             .replace(/\{role\}/g, role)
             .replace(/\{phone\}/g, phone)
-            .replace(/\{unitHomeCare\}/g, unitB)
-            .replace(/\{unitDayCare\}/g, unitB)
+            .replace(/\{unitHomeCare\}/g, unitHomeCare)
+            .replace(/\{unitDayCare\}/g, unitDayCare)
             .replace(/\{unitC\}/g, unitC)
-            .replace(/\{unitD\}/g, unitD);
+            .replace(/\{unitD\}/g, unitD)
+            .replace(/\{unitMeal\}/g, unitMeal);
     }
 
    // 更新單一欄位內容
