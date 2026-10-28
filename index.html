@@ -63,39 +63,47 @@
         <p class="subtitle">以問卷勾選方式快速組合紀錄，生成結果直接顯示於各欄位正下方（內建 AA02 專業詞庫）</p>
     </header>
 
-    <!-- 頂部導覽列 (移到正確的位置了) -->
+    <!-- 頂部導覽列 -->
     <div style="background: #0f766e; padding: 10px; border-radius: 8px; margin-bottom: 25px; display: flex; gap: 10px; justify-content: center;">
         <a href="index.html" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; background: rgba(255,255,255,0.2);">📞 家/電訪紀錄生成</a>
-        <a href="https://paulnehao.github.io/long-care2016/careplan.html" target="_blank" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; transition: 0.2s;">📝 照顧計畫生成</a>
+        <a href="careplan.html" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; transition: 0.2s;">📝 照顧計畫生成</a>
     </div>
 
-    <!-- 頂部連動參數區 -->
+    <!-- 頂部連動參數區 (五種獨立輸入框) -->
     <div class="config-box">
         <div class="config-item">
             <label>訪視別與對象</label>
             <select id="targetRole" onchange="updateAll()">
                 <option value="家屬">家屬</option>
                 <option value="個案">個案本人</option>
-                <option value="案子">案子</option>
-                <option value="案女">案女</option>
+                <option value="案長子">案長子</option>
+                <option value="案長女">案長女</option>
                 <option value="案配偶">案配偶</option>
             </select>
         </div>
         <div class="config-item">
-            <label>受訪者姓名與電話 (帶入第4欄)</label>
+            <label>受訪者姓名與電話</label>
             <input type="text" id="targetPhone" placeholder="例：王OO 0912-345678" oninput="updateAll()">
         </div>
         <div class="config-item">
-            <label>居服/日照 B單位名稱</label>
-            <input type="text" id="unitB" placeholder="例：OO居家 / 禾啟日照" value="OO居家" oninput="updateAll()">
+            <label>居服 B單位名稱</label>
+            <input type="text" id="unitHomeCare" placeholder="例：OO居家" value="OO居家" oninput="updateAll()">
         </div>
         <div class="config-item">
-            <label>C碼/D碼單位名稱</label>
-            <input type="text" id="unitOther" placeholder="例：OO治療所 / 禾啟日照" value="OO治療所" oninput="updateAll()">
+            <label>日照 B單位名稱</label>
+            <input type="text" id="unitDayCare" placeholder="例：禾啟日照" value="禾啟日照" oninput="updateAll()">
         </div>
         <div class="config-item">
-            <label>D碼/送餐 單位名稱</label>
-            <input type="text" id="unitOther" placeholder="例：OO交通單位 / OO送餐單位" value="OO單位" oninput="updateAll()">
+            <label>C碼 單位名稱</label>
+            <input type="text" id="unitC" placeholder="例：XX物理治療所" value="XX物理治療所" oninput="updateAll()">
+        </div>
+        <div class="config-item">
+            <label>D碼 單位名稱</label>
+            <input type="text" id="unitD" placeholder="例：OO交通" value="OO交通" oninput="updateAll()">
+        </div>
+        <div class="config-item">
+            <label>送餐 單位名稱</label>
+            <input type="text" id="unitMeal" placeholder="例：OO送餐" value="OO送餐" oninput="updateAll()">
         </div>
     </div>
 
@@ -113,7 +121,7 @@
         </div>
     </div>
 
-  <!-- 欄位 2 -->
+    <!-- 欄位 2 -->
     <div class="section-card" id="sec2">
         <div class="section-title">2. 各項服務目標及整體計畫目標達成情形</div>
         <span class="section-desc">※ 書寫內容：照顧計劃中各服務類別服務執行狀況。請勾選相關項目：</span>
@@ -121,23 +129,23 @@
         <div class="Sub-group">
             <span class="sub-title">▪ BA碼 照顧服務</span>
             <div class="checkbox-grid">
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼】B單位-【{unitHomeCare}】定期提供照顧，個案作息平穩。【{role}】肯定居服員細心及整體服務品質，持續服務需求。" onchange="updateField(2)"> 居服：起居平穩、工作細心</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼】B單位-【{unitHomeCare}】居服員動作熟練且態度專業，與案家建立良好信任。各項服務確實執行，持續服務需求。" onchange="updateField(2)"> 居服：動作熟練、建立信任</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼】【{role}】表示 B單位-【{unitHomeCare}】居服員準時到宅。照顧內容符合預期，滿意度高，持續服務需求。" onchange="updateField(2)"> 居服：準時到宅、符合預期</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼】【{role}】表示 B單位-【{unitHomeCare}】服務穩定準時，持續服務需求。" onchange="updateField(2)"> 居服：簡潔 (穩定準時)</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【日照服務】於【{unitDayCare}】接受服務狀況平穩。機構確實透過聯絡簿/LINE回報近況，家屬認同服務品質，持續服務需求。" onchange="updateField(2)"> 日照：狀況平穩、機構回報</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼】透過居服協助日常照顧，有效維持個案起居品質並減輕家屬負荷，目標穩定達成中。" onchange="updateField(2)"> 目標：維持品質、減輕負荷</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼】本月截至訪視日，暫未使用本服務。" onchange="updateField(2)"> 未使用：本月暫停服務</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼】B單位【{unitHomeCare}】服務規律，有助穩定個案作息。【{role}】肯定居服細心度及整體品質，後續仍有服務需求。" onchange="updateField(2)"> 居服：起居平穩、工作細心</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼】B單位【{unitHomeCare}】居服員態度佳、技巧專業且落實各項服務，深獲案家信任，後續仍有服務需求。" onchange="updateField(2)"> 居服：動作熟練、建立信任</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼】【{role}】表示 B單位【{unitHomeCare}】居服員準時到宅，照顧內容符合預期，滿意度高，後續仍有服務需求。" onchange="updateField(2)"> 居服：準時到宅、符合預期</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼】【{role}】表示 B單位【{unitHomeCare}】服務穩定準時，後續仍有服務需求。" onchange="updateField(2)"> 居服：簡潔 (穩定準時)</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【日照服務】於【{unitDayCare}】接受服務狀況平穩。機構定期透過聯絡簿或通訊軟體回報近況，家屬認同服務品質，後續仍有服務需求。" onchange="updateField(2)"> 日照：狀況平穩、機構回報</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼】透過居服協助日常照顧，有效維持個案起居品質並減輕家屬負荷，計畫目標穩定達成中。" onchange="updateField(2)"> 目標：維持品質、減輕負荷</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【BA碼】本月截至訪視日，暫未使用本項服務。" onchange="updateField(2)"> 未使用：本月暫停服務</label>
             </div>
         </div>
 
         <div class="Sub-group">
             <span class="sub-title">▪ C碼 專業服務</span>
             <div class="checkbox-grid">
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼】追蹤單位-【{unitC}】，單次服務足60分鐘。個案對復能指導接受度高，互動佳，持續服務需求。" onchange="updateField(2)"> C碼：足60分、接受度高</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼】追蹤單位-【{unitC}】，專業人員講解細心。家屬自我執行無礙，依規留存紀錄，持續服務需求。" onchange="updateField(2)"> C碼：講解細心、家屬可自執行</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼】追蹤單位【{unitC}】，單次服務達60分鐘。個案對復能指導接受度高且互動佳，後續仍有服務需求。" onchange="updateField(2)"> C碼：足60分、接受度高</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼】追蹤單位【{unitC}】，專業人員指導細心。家屬可自行操作無礙並依規留存紀錄，後續仍有服務需求。" onchange="updateField(2)"> C碼：指導細心、家屬可自執行</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼】專業介入後，主要照顧者已理解指導技巧，自行操作無礙，有效提升家庭自主照顧能力。" onchange="updateField(2)"> 目標：家屬熟稔技巧</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼】本月截至訪視日，暫未使用本服務。" onchange="updateField(2)"> 未使用：本月暫停服務</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【C碼】本月截至訪視日，暫未使用本項服務。" onchange="updateField(2)"> 未使用：本月暫停服務</label>
             </div>
         </div>
 
@@ -155,7 +163,7 @@
             <span class="sub-title">▪ EF碼 輔具及無障礙環改服務</span>
             <div class="checkbox-grid">
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【EF碼】輔具使用狀況良好，個案適應佳。有效輔助日常活動並維護居家安全，目標穩定達成中。" onchange="updateField(2)"> 輔具：使用良好、適應佳</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【EF碼】家屬表示近期有新增或調整輔具需求，將協助重新評估。" onchange="updateField(2)"> 輔具：有新增/調整需求</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【EF碼】家屬表示近期有新增或調整輔具需求，待案家討論提出後協助申請。" onchange="updateField(2)"> 輔具：有新增/調整需求</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【EF碼】本月無相關服務介入。" onchange="updateField(2)"> 未使用：本月無介入</label>
             </div>
         </div>
@@ -171,7 +179,7 @@
         <div class="Sub-group">
             <span class="sub-title">▪ 其他 (營養餐 / 據點 / 整體目標)</span>
             <div class="checkbox-grid">
-                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【營養餐】單位-【{unitMeal}】，每日準時送達且餐食均衡。有助維持基本營養，案家肯定服務品質。" onchange="updateField(2)"> OT營養餐：準時均衡</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f2" value="【營養餐】單位-【{unitD}】，每日準時送達且餐食均衡。有助維持基本營養，案家肯定服務品質。" onchange="updateField(2)"> OT營養餐：準時均衡</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【失智據點】個案持續規律參與據點活動，對服務品質表示滿意。" onchange="updateField(2)"> 失智據點：規律參與</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f2" value="【整體計畫目標】各項長照服務穩定執行，有效協助個案維持生活功能，整體目標穩定達成中。" onchange="updateField(2)"> 整體目標：穩定達成中</label>
             </div>
@@ -228,10 +236,10 @@
         <div class="Sub-group">
             <span class="sub-title">▪ 家庭照顧者負荷 & 季節/日常衛教提醒</span>
             <div class="checkbox-grid">
-                <label class="chk-card"><input type="checkbox" class="chk-f4" value="【家照負荷】追蹤【{role}】表示目前照顧負荷尚可，暫無家照據點介入需求。" onchange="updateField(4)"> 家照追蹤：照顧負荷尚可、無家照需求</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f4" value="【家照負荷】追蹤【{role}】表示目前照顧負荷尚可，暫無喘息服務介入需求。" onchange="updateField(4)"> 家照追蹤：照顧負荷尚可、無家照需求</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f4" value="【季節衛教】夏季炎熱，叮囑注意室內通風及定時補充水分，嚴防長輩脫水與熱傷害。" onchange="updateField(4)"> 夏季衛教：定時補水、防熱傷害</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f4" value="【季節衛教】雨後濕熱，衛教落實「巡、倒、清、刷」清除積水。提醒外出防蚊，並留意雨天防滑。" onchange="updateField(4)"> 雨季衛教：登革熱防蚊、雨天防滑</label>
-                <label class="chk-card"><input type="checkbox" class="chk-f4" value="【季節衛教】早晚溫差大，建議留意氣溫變化適時添衣保暖；提醒規律服藥，降低心血管風險。" onchange="updateField(4)"> 冬季衛教：溫差保暖、規律服藥</label>
+                <label class="chk-card"><input type="checkbox" class="chk-f4" value="【季節衛教】早晚溫差大，建議留意氣溫變化適時協助添衣保暖；提醒規律服藥，降低心血管風險。" onchange="updateField(4)"> 冬季衛教：溫差保暖、規律服藥</label>
                 <label class="chk-card"><input type="checkbox" class="chk-f4" value="【日常衛教】叮囑居家保持光線明亮及地面乾燥，留意行走安全防跌；並提醒遵囑規律用藥。" onchange="updateField(4)"> 日常衛教：居家防跌、用藥安全</label>
             </div>
         </div>
@@ -253,20 +261,17 @@
     function replaceVars(text) {
         const role = document.getElementById('targetRole').value || '家屬';
         const phone = document.getElementById('targetPhone').value || '';
-        const unitHomeCare = document.getElementById('unitHomeCare').value || 'OO居家';
-        const unitDayCare = document.getElementById('unitDayCare').value || 'OO日照';
-        const unitC = document.getElementById('unitC').value || '特約C單位';
-        const unitD = document.getElementById('unitD').value || '特約D單位';
-        const unitMeal = document.getElementById('unitMeal').value || '送餐單位';
+        const unitB = document.getElementById('unitB').value || 'OO居家';
+        const unitC = document.getElementById('unitC').value || 'OO治療所';
+        const unitD = document.getElementById('unitD').value || 'OO單位';
 
         return text
             .replace(/\{role\}/g, role)
             .replace(/\{phone\}/g, phone)
-            .replace(/\{unitHomeCare\}/g, unitHomeCare)
-            .replace(/\{unitDayCare\}/g, unitDayCare)
+            .replace(/\{unitHomeCare\}/g, unitB)
+            .replace(/\{unitDayCare\}/g, unitB)
             .replace(/\{unitC\}/g, unitC)
-            .replace(/\{unitD\}/g, unitD)
-            .replace(/\{unitMeal\}/g, unitMeal);
+            .replace(/\{unitD\}/g, unitD);
     }
 
    // 更新單一欄位內容
